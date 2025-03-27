@@ -91,7 +91,7 @@ class MomoService {
         responseTime: Date.now(),
         message: 'Success (Sandbox Mode)',
         resultCode: 0,
-        payUrl: `${process.env.NEXT_PUBLIC_APP_URL}/payment/momo-sandbox?orderId=${orderId}&amount=${amount}&orderInfo=${encodeURIComponent(orderInfo)}`,
+        payUrl: new URL(`/payment/momo-sandbox?orderId=${orderId}&amount=${amount}&orderInfo=${encodeURIComponent(orderInfo)}`, process.env.NEXT_PUBLIC_APP_URL).toString(),
         deeplink: '',
         qrCodeUrl: '',
         deeplinkWebInApp: '',
