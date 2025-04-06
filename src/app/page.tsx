@@ -14,6 +14,7 @@ import { useFavorites } from '@/contexts/favorites.context';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { useAuthStore } from '@/store/auth.store';
+import { animateElement, AnimationTypes } from '@/utils/animation';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -48,10 +49,15 @@ export default function Home() {
       return;
     }
     
+    const button = e.currentTarget as HTMLButtonElement;
+    
     if (isFavorite(room.id, 'room')) {
-      removeFavorite(room.id, 'room');
-      toast.success(`Đã xóa "${room.tenPhong}" khỏi danh sách yêu thích`);
+      animateElement(button, AnimationTypes.BOUNCE).then(() => {
+        removeFavorite(room.id, 'room');
+        toast.success(`Đã xóa "${room.tenPhong}" khỏi danh sách yêu thích`);
+      });
     } else {
+      animateElement(button, AnimationTypes.HEART_BEAT);
       addFavorite(room.id, 'room');
       toast.success(`Đã thêm "${room.tenPhong}" vào danh sách yêu thích`);
     }
@@ -67,10 +73,15 @@ export default function Home() {
       return;
     }
     
+    const button = e.currentTarget as HTMLButtonElement;
+    
     if (isFavorite(location.id, 'location')) {
-      removeFavorite(location.id, 'location');
-      toast.success(`Đã xóa "${location.tenViTri}" khỏi danh sách yêu thích`);
+      animateElement(button, AnimationTypes.BOUNCE).then(() => {
+        removeFavorite(location.id, 'location');
+        toast.success(`Đã xóa "${location.tenViTri}" khỏi danh sách yêu thích`);
+      });
     } else {
+      animateElement(button, AnimationTypes.HEART_BEAT);
       addFavorite(location.id, 'location');
       toast.success(`Đã thêm "${location.tenViTri}" vào danh sách yêu thích`);
     }
@@ -86,7 +97,7 @@ export default function Home() {
       <section className="relative h-[600px] flex items-center">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://a0.muscache.com/im/pictures/e4a2a61c-589f-4e49-b3b8-968a6bc23389.jpg"
+            src="https://www.spinxdigital.com/app/uploads/2022/11/image-airbnb.jpg"
             alt="Hero background"
             fill
             priority
@@ -97,11 +108,13 @@ export default function Home() {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-2xl text-white">
-            <h1 className="text-5xl font-bold mb-4">Khám phá không gian nghỉ dưỡng lý tưởng</h1>
-            <p className="text-xl mb-8">Với hàng nghìn địa điểm đặc biệt trên khắp thế giới dành cho bạn.</p>
+          <div className="max-w-2xl text-white animate__animated animate__fadeIn animate__delay-1s">
+            <h1 className="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Khám phá không gian nghỉ dưỡng lý tưởng</h1>
+            <p className="text-xl mb-8 animate__animated animate__fadeInUp animate__delay-1s">Với hàng nghìn địa điểm đặc biệt trên khắp thế giới dành cho bạn.</p>
             
-             <SearchBar />
+            <div className="animate__animated animate__fadeInUp animate__delay-2s">
+              <SearchBar />
+            </div>
           </div>
         </div>
       </section>
@@ -109,18 +122,18 @@ export default function Home() {
       {/* Popular Destinations */}
       <section className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
-          <div>
+          <div className="animate__animated animate__fadeInLeft">
             <h2 className="text-3xl font-bold text-airbnb-hof dark:text-white">Địa điểm nổi bật</h2>
             <p className="text-gray-600 dark:text-gray-300 mt-2">Khám phá các địa điểm tuyệt vời cho chuyến đi sắp tới của bạn</p>
           </div>
-          <Link href="/locations" className="text-airbnb-rosa hover:text-airbnb-rausch font-medium flex items-center transition-colors">
+          <Link href="/locations" className="text-airbnb-rosa hover:text-airbnb-rausch font-medium flex items-center transition-colors animate__animated animate__fadeInRight">
             Xem tất cả <ArrowRight className="h-4 w-4 ml-1" />
           </Link>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {locations.slice(0, 8).map((location: Location, index) => (
-            <div key={location.id} className="group relative">
+            <div key={location.id} className={`group relative animate__animated animate__fadeIn animate__delay-${index % 5}s`}>
               <Link
                 href={`/rooms?locationId=${location.id}`}
                 className="block"
@@ -148,13 +161,13 @@ export default function Home() {
               {mounted && (
                 <button 
                   onClick={(e) => handleLocationFavoriteToggle(e, location)}
-                  className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:scale-110 transition-transform"
+                  className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:scale-110 transition-all duration-200 hover:shadow-lg active:scale-95"
                   aria-label={isFavorite(location.id, 'location') ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"}
                 >
-                  <Heart className={`h-5 w-5 ${
+                  <Heart className={`h-5 w-5 transition-all duration-200 ${
                     isFavorite(location.id, 'location') 
-                      ? 'text-airbnb-rosa fill-airbnb-rosa' 
-                      : 'text-airbnb-rosa'
+                      ? 'text-red-500 fill-red-500 scale-110' 
+                      : 'text-gray-500 hover:text-red-500'
                   }`} />
                 </button>
               )}
@@ -167,18 +180,18 @@ export default function Home() {
       <section className="bg-airbnb-foggy dark:bg-gray-800 py-16">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
-            <div>
+            <div className="animate__animated animate__fadeInLeft">
               <h2 className="text-3xl font-bold text-airbnb-hof dark:text-white">Phòng đề xuất</h2>
               <p className="text-gray-600 dark:text-gray-300 mt-2">Những lựa chọn tuyệt vời cho kỳ nghỉ hoàn hảo của bạn</p>
             </div>
-            <Link href="/rooms" className="text-airbnb-rosa hover:text-airbnb-rausch font-medium flex items-center transition-colors">
+            <Link href="/rooms" className="text-airbnb-rosa hover:text-airbnb-rausch font-medium flex items-center transition-colors animate__animated animate__fadeInRight">
               Xem tất cả <ArrowRight className="h-4 w-4 ml-1" />
             </Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {featuredRooms.map((room, index) => (
-              <div key={room.id} className="group relative">
+              <div key={room.id} className={`group relative animate__animated animate__fadeIn animate__delay-${index % 5}s`}>
                 <Link
                   href={`/rooms/${room.id}`}
                   className="block bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
@@ -244,13 +257,13 @@ export default function Home() {
                 {mounted && (
                   <button 
                     onClick={(e) => handleRoomFavoriteToggle(e, room)}
-                    className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:scale-110 transition-transform"
+                    className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:scale-110 transition-all duration-200 hover:shadow-lg active:scale-95"
                     aria-label={isFavorite(room.id, 'room') ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"}
                   >
-                    <Heart className={`h-5 w-5 ${
+                    <Heart className={`h-5 w-5 transition-all duration-200 ${
                       isFavorite(room.id, 'room') 
-                        ? 'text-airbnb-rosa fill-airbnb-rosa' 
-                        : 'text-airbnb-rosa'
+                        ? 'text-red-500 fill-red-500 scale-110' 
+                        : 'text-gray-500 hover:text-red-500'
                     }`} />
                   </button>
                 )}
@@ -262,21 +275,21 @@ export default function Home() {
 
       {/* Call to Action */}
       <section className="container mx-auto px-4 py-8">
-        <div className="bg-gradient-to-r from-airbnb-rosa to-airbnb-rausch rounded-3xl overflow-hidden">
+        <div className="bg-gradient-to-r from-airbnb-rosa to-airbnb-rausch rounded-3xl overflow-hidden animate__animated animate__fadeIn animate__slower">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="p-8 md:p-12 flex flex-col justify-center">
-              <h2 className="text-3xl font-bold mb-4 text-white">Trở thành chủ nhà</h2>
-              <p className="text-white opacity-90 mb-6">Chia sẻ không gian của bạn, tạo thêm thu nhập và mở ra những cơ hội mới bằng cách chia sẻ nơi ở của bạn.</p>
-              <div>
+              <h2 className="text-3xl font-bold mb-4 text-white animate__animated animate__fadeInLeft">Trở thành chủ nhà</h2>
+              <p className="text-white opacity-90 mb-6 animate__animated animate__fadeInLeft animate__delay-1s">Chia sẻ không gian của bạn, tạo thêm thu nhập và mở ra những cơ hội mới bằng cách chia sẻ nơi ở của bạn.</p>
+              <div className="animate__animated animate__fadeInUp animate__delay-2s">
                 <Link 
                   href="/become-host" 
-                  className="inline-flex items-center px-6 py-3 bg-white hover:bg-airbnb-foggy text-airbnb-rosa font-medium rounded-full transition-colors dark:hover:bg-gray-200"
+                  className="inline-flex items-center px-6 py-3 bg-white hover:bg-airbnb-foggy text-airbnb-rosa font-medium rounded-full transition-colors dark:hover:bg-gray-200 animate__animated animate__pulse animate__infinite animate__slower"
                 >
                   Tìm hiểu thêm <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </div>
             </div>
-            <div className="relative h-64 md:h-auto">
+            <div className="relative h-64 md:h-auto animate__animated animate__fadeInRight">
               <Image
                 src="https://a0.muscache.com/im/pictures/791aba62-2de8-4722-99b5-45838715eb34.jpg"
                 alt="Become a host"

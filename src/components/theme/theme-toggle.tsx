@@ -9,7 +9,6 @@ export default function ThemeToggle() {
   const handleThemeToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Button clicked, toggling theme from:', theme);
     toggleTheme();
   };
 
@@ -17,14 +16,18 @@ export default function ThemeToggle() {
     <div className="relative">
       <button
         onClick={handleThemeToggle}
-        className="p-2 rounded-full hover:bg-airbnb-foggy dark:hover:bg-gray-700 transition-colors"
+        className={`p-2 rounded-full transition-all duration-300 ${
+          theme === 'dark'
+            ? 'bg-[#383838] text-yellow-300 hover:bg-[#2A2A2A] hover:text-yellow-200'
+            : 'bg-bg-secondary text-primary hover:bg-border hover:text-primary-hover'
+        }`}
         aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         data-testid="theme-toggle"
       >
         {theme === 'dark' ? (
-          <Sun className="h-5 w-5 text-yellow-300" />
+          <Sun className="h-5 w-5" />
         ) : (
-          <Moon className="h-5 w-5 text-airbnb-hof" />
+          <Moon className="h-5 w-5" />
         )}
       </button>
       

@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useFavorites } from '@/contexts/favorites.context';
+import { animateElement, AnimationTypes } from '@/utils/animation';
 
 export default function RoomDetailPage() {
   const { id } = useParams();
@@ -129,9 +130,6 @@ export default function RoomDetailPage() {
 
   // Hàm xử lý yêu thích
   const handleFavoriteToggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
     if (!user) {
       toast.error('Bạn cần đăng nhập để sử dụng tính năng yêu thích');
       return;
@@ -139,10 +137,15 @@ export default function RoomDetailPage() {
     
     if (!room) return;
     
+    const button = e.currentTarget as HTMLButtonElement;
+    
     if (isFavorite(room.id, 'room')) {
-      removeFavorite(room.id, 'room');
-      toast.success(`Đã xóa "${room.tenPhong}" khỏi danh sách yêu thích`);
+      animateElement(button, AnimationTypes.BOUNCE).then(() => {
+        removeFavorite(room.id, 'room');
+        toast.success(`Đã xóa "${room.tenPhong}" khỏi danh sách yêu thích`);
+      });
     } else {
+      animateElement(button, AnimationTypes.HEART_BEAT);
       addFavorite(room.id, 'room');
       toast.success(`Đã thêm "${room.tenPhong}" vào danh sách yêu thích`);
     }
@@ -231,7 +234,7 @@ export default function RoomDetailPage() {
       {/* Back button */}
       <button
         onClick={() => router.back()}
-        className="mb-6 inline-flex items-center text-gray-600 hover:text-gray-900"
+        className="mb-6 inline-flex items-center text-gray-600 hover:text-gray-900 animate__animated animate__fadeInLeft"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
         <span>Quay lại</span>
@@ -240,24 +243,24 @@ export default function RoomDetailPage() {
       {/* Room title and location */}
       <div className="mb-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900">{room.tenPhong}</h1>
+          <h1 className="text-3xl font-bold text-gray-900 animate__animated animate__fadeInDown">{room.tenPhong}</h1>
           
           {/* Yêu thích */}
           {room && (
             <button 
               onClick={handleFavoriteToggle}
-              className="p-2 bg-white rounded-full shadow-md hover:scale-110 transition-transform"
+              className="p-2 bg-white dark:bg-gray-800 rounded-full shadow-md hover:scale-110 transition-all duration-200 hover:shadow-lg active:scale-95 animate__animated animate__fadeInRight"
               aria-label={isFavorite(room.id, 'room') ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"}
             >
-              <Heart className={`h-5 w-5 ${
+              <Heart className={`h-5 w-5 transition-all duration-200 ${
                 isFavorite(room.id, 'room') 
-                  ? 'text-airbnb-rosa fill-airbnb-rosa' 
-                  : 'text-airbnb-rosa'
+                  ? 'text-red-500 fill-red-500 scale-110' 
+                  : 'text-gray-500 hover:text-red-500'
               }`} />
             </button>
           )}
         </div>
-        <div className="flex items-center mt-2 text-gray-600">
+        <div className="flex items-center mt-2 text-gray-600 animate__animated animate__fadeIn animate__delay-1s">
           <div className="flex items-center">
             <Star className="h-4 w-4 text-amber-500 fill-current mr-1" />
             <span className="font-medium mr-1">{averageRating}</span>
@@ -272,7 +275,7 @@ export default function RoomDetailPage() {
       </div>
 
       {/* Image gallery */}
-      <div className="grid grid-cols-1 gap-4 mb-8">
+      <div className="grid grid-cols-1 gap-4 mb-8 animate__animated animate__zoomIn animate__delay-1s">
         <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
           <Image
             src={
@@ -295,7 +298,7 @@ export default function RoomDetailPage() {
         {/* Room details */}
         <div className="lg:col-span-2">
           {/* Room info */}
-          <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+          <div className="bg-white rounded-xl shadow-sm p-6 mb-8 animate__animated animate__fadeInLeft animate__delay-2s">
             <div className="flex items-center justify-between pb-6 border-b">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900">
@@ -325,7 +328,7 @@ export default function RoomDetailPage() {
             </div>
 
             {/* Thông tin chi tiết */}
-            <div className="py-6 border-b">
+            <div className="py-6 border-b animate__animated animate__fadeIn animate__delay-3s">
               <h3 className="text-lg font-semibold mb-4">Chi tiết phòng</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-3">

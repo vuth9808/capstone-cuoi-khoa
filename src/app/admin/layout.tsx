@@ -14,10 +14,13 @@ import {
   X, 
   LogOut, 
   Settings, 
-  Bell
+  Bell,
+  Moon,
+  Sun
 } from 'lucide-react';
 import { useAdminAuth } from '@/hooks/use-admin-auth';
 import { useAuthStore } from '@/store/auth.store';
+import { useTheme } from '@/contexts/theme.context';
 
 export default function AdminLayout({
   children,
@@ -29,6 +32,7 @@ export default function AdminLayout({
   const [mounted, setMounted] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { signOut } = useAuthStore();
+  const { theme, toggleTheme } = useTheme();
   const [notifications] = useState([
     { id: 1, message: 'New user registered', time: '2 mins ago' },
     { id: 2, message: 'New booking request', time: '1 hour ago' },
@@ -80,7 +84,7 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-bg-secondary dark:bg-[#121212] flex">
       {/* Sidebar backdrop for mobile */}
       {isSidebarOpen && (
         <div 
@@ -91,13 +95,13 @@ export default function AdminLayout({
 
       {/* Sidebar */}
       <div 
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-bg-primary dark:bg-[#1D1D1D] shadow-lg transform ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen`}
+        } transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen border-r border-border dark:border-[#383838]`}
       >
         <div className="flex flex-col h-full">
           {/* Sidebar header */}
-          <div className="flex items-center justify-between px-6 h-16 border-b">
+          <div className="flex items-center justify-between px-6 h-16 border-b border-border dark:border-[#383838]">
             <Link href="/admin" className="flex items-center space-x-2">
               <div className="relative w-8 h-8">
                 <Image
@@ -108,20 +112,20 @@ export default function AdminLayout({
                   className="object-contain"
                 />
               </div>
-              <span className="text-lg font-bold text-gray-900">Quản Trị</span>
+              <span className="text-lg font-bold text-text-primary dark:text-white">Quản Trị</span>
             </Link>
             <button 
               onClick={() => setIsSidebarOpen(false)}
-              className="md:hidden text-gray-500 hover:text-gray-700"
+              className="md:hidden text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white"
             >
               <X size={20} />
             </button>
           </div>
 
           {/* User info */}
-          <div className="p-6 border-b">
+          <div className="p-6 border-b border-border dark:border-[#383838]">
             <div className="flex items-center space-x-3">
-              <div className="relative h-10 w-10 rounded-full overflow-hidden bg-gray-100">
+              <div className="relative h-10 w-10 rounded-full overflow-hidden bg-bg-secondary dark:bg-[#383838]">
                 <Image
                   src={user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name.trim())}`}
                   alt={user.name}
@@ -132,8 +136,8 @@ export default function AdminLayout({
                 />
               </div>
               <div>
-                <p className="font-medium text-gray-900">{user.name}</p>
-                <p className="text-xs text-gray-500">{user.role === 'ADMIN' ? 'Quản trị viên' : 'Người dùng'}</p>
+                <p className="font-medium text-text-primary dark:text-white">{user.name}</p>
+                <p className="text-xs text-text-secondary dark:text-[#B0B0B0]">{user.role === 'ADMIN' ? 'Quản trị viên' : 'Người dùng'}</p>
               </div>
             </div>
           </div>
@@ -149,8 +153,8 @@ export default function AdminLayout({
                   href={link.href}
                   className={`flex items-center px-4 py-3 rounded-lg transition-colors ${
                     isActive
-                      ? 'bg-rose-500 text-white shadow-md'
-                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                      ? 'bg-primary text-white shadow-md'
+                      : 'text-text-secondary dark:text-[#B0B0B0] hover:bg-bg-secondary dark:hover:bg-[#2A2A2A] hover:text-text-primary dark:hover:text-white'
                   }`}
                   aria-current={isActive ? 'page' : undefined}
                 >
@@ -162,10 +166,10 @@ export default function AdminLayout({
           </nav>
 
           {/* Logout button */}
-          <div className="p-4 border-t mt-auto">
+          <div className="p-4 border-t border-border dark:border-[#383838] mt-auto">
             <button
               onClick={() => signOut()}
-              className="flex items-center w-full px-4 py-2 text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors"
+              className="flex items-center w-full px-4 py-2 text-text-secondary dark:text-[#B0B0B0] rounded-lg hover:bg-bg-secondary dark:hover:bg-[#2A2A2A] hover:text-text-primary dark:hover:text-white transition-colors"
             >
               <LogOut className="h-5 w-5 mr-3" />
               <span>Đăng xuất</span>
@@ -177,26 +181,35 @@ export default function AdminLayout({
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top navbar */}
-        <header className="bg-white shadow-sm z-10">
+        <header className="bg-bg-primary dark:bg-[#1D1D1D] shadow-sm z-10 border-b border-border dark:border-[#383838]">
           <div className="px-6 h-16 flex items-center justify-between">
             <div className="flex items-center">
               <button
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="md:hidden text-gray-500 hover:text-gray-700 mr-4"
+                className="md:hidden text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white mr-4"
               >
                 <Menu size={24} />
               </button>
-              <div className="text-xl font-semibold text-gray-800 hidden md:block">
+              <div className="text-xl font-semibold text-text-primary dark:text-white hidden md:block">
                 {navLinks.find(link => link.href === pathname)?.label || 'Quản Trị'}
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              {/* Theme toggle */}
+              <button 
+                onClick={toggleTheme}
+                className="p-2 text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white rounded-full hover:bg-bg-secondary dark:hover:bg-[#2A2A2A]"
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+              
               {/* Notifications */}
               <div className="relative">
-                <button className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100">
+                <button className="p-2 text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white rounded-full hover:bg-bg-secondary dark:hover:bg-[#2A2A2A]">
                   <Bell size={20} />
                   {notifications.length > 0 && (
-                    <span className="absolute top-1 right-1 bg-rose-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute top-1 right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                       {notifications.length}
                     </span>
                   )}
@@ -204,14 +217,14 @@ export default function AdminLayout({
               </div>
               
               {/* Settings */}
-              <button className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100">
+              <button className="p-2 text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white rounded-full hover:bg-bg-secondary dark:hover:bg-[#2A2A2A]">
                 <Settings size={20} />
               </button>
               
               {/* Return to site */}
               <Link 
                 href="/"
-                className="hidden md:flex text-gray-600 hover:text-gray-900 text-sm font-medium items-center px-3 py-2 rounded hover:bg-gray-100"
+                className="hidden md:flex text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white text-sm font-medium items-center px-3 py-2 rounded hover:bg-bg-secondary dark:hover:bg-[#2A2A2A]"
               >
                 <Home className="h-4 w-4 mr-2" />
                 Về trang chủ
@@ -226,8 +239,8 @@ export default function AdminLayout({
         </main>
         
         {/* Footer */}
-        <footer className="bg-white border-t py-3 px-6">
-          <div className="text-sm text-gray-500 text-center">
+        <footer className="bg-bg-primary dark:bg-[#1D1D1D] border-t py-3 px-6">
+          <div className="text-sm text-text-secondary dark:text-[#B0B0B0] text-center">
             &copy; {new Date().getFullYear()} Surf - Hệ thống quản lý phòng. Đã đăng nhập với vai trò {user.role === 'ADMIN' ? 'Quản trị viên' : 'Người dùng'}.
           </div>
         </footer>

@@ -42,6 +42,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'bizweb.dktcdn.net', 
       },
+      {
+        protocol: 'https',
+        hostname: 'www.spinxdigital.com',
+      },
     ],
   },
 };

@@ -49,8 +49,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     
     if (theme === 'dark') {
       htmlElement.classList.add('dark');
+      document.body.style.backgroundColor = '#121212'; // Đảm bảo màu nền được áp dụng ngay lập tức
     } else {
       htmlElement.classList.remove('dark');
+      document.body.style.backgroundColor = '#FFFFFF'; // Đảm bảo màu nền được áp dụng ngay lập tức
     }
     
     // Lưu lựa chọn vào localStorage

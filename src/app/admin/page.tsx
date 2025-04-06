@@ -49,7 +49,7 @@ export default function AdminDashboard() {
 
   if (!mounted || isLoading) {
     return (
-      <div className="min-h-[50vh] flex items-center justify-center dark:bg-gray-900">
+      <div className="min-h-[50vh] flex items-center justify-center dark:bg-[#121212]">
         <LoadingSpinner />
       </div>
     );
@@ -117,14 +117,14 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="dark:bg-gray-900">
+    <div className="dark:bg-[#121212]">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
         <div className='mb-4 mt-6 text-center ml-95' >
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Bảng điều khiển</h1>
-          <p className="text-gray-600 dark:text-gray-300 mt-1">Chào mừng quay trở lại! Dưới đây là tổng quan về hệ thống của bạn.</p>
+          <h1 className="text-2xl font-bold text-text-primary dark:text-white">Bảng điều khiển</h1>
+          <p className="text-text-secondary dark:text-[#B0B0B0] mt-1">Chào mừng quay trở lại! Dưới đây là tổng quan về hệ thống của bạn.</p>
         </div>
-        <div className="mt-2 md:mt-0 px-3 py-2 bg-white dark:bg-gray-800 shadow-sm rounded-lg text-sm text-gray-500 dark:text-gray-300 flex items-center mr-5">
-          <Calendar className="h-4 w-4 mr-2 text-rose-500" />
+        <div className="mt-2 md:mt-0 px-3 py-2 bg-bg-primary dark:bg-[#1D1D1D] shadow-sm rounded-lg text-sm text-text-secondary dark:text-[#B0B0B0] flex items-center mr-5">
+          <Calendar className="h-4 w-4 mr-2 text-primary" />
           {new Date().toLocaleDateString('vi-VN', { 
             weekday: 'long', 
             year: 'numeric', 
@@ -141,21 +141,21 @@ export default function AdminDashboard() {
             <Link
               key={stat.name}
               href={stat.href}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-all hover:shadow-md hover:translate-y-[-2px] dark:shadow-gray-800/10"
+              className="bg-bg-primary dark:bg-[#1D1D1D] rounded-xl shadow-sm p-6 transition-all hover:shadow-md hover:translate-y-[-2px] dark:shadow-[#383838]/10 border border-border dark:border-[#383838]"
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{stat.name}</p>
-                  <p className="text-2xl font-bold mt-1 dark:text-white">{stat.value.toLocaleString()}</p>
+                  <p className="text-sm font-medium text-text-secondary dark:text-[#B0B0B0]">{stat.name}</p>
+                  <p className="text-2xl font-bold mt-1 text-text-primary dark:text-white">{stat.value.toLocaleString()}</p>
                   
                   {stat.change && (
                     <div className="flex items-center mt-2">
                       <span className={`text-xs font-medium ${
-                        stat.changeType === 'increase' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
+                        stat.changeType === 'increase' ? 'text-success dark:text-[#00C907]' : 'text-warning dark:text-[#E84A35]'
                       }`}>
                         {stat.change}
                       </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">so với tháng trước</span>
+                      <span className="text-xs text-text-secondary dark:text-[#B0B0B0] ml-1">so với tháng trước</span>
                     </div>
                   )}
                 </div>
@@ -169,13 +169,13 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 lg:col-span-2 dark:shadow-gray-800/10">
+        <div className="bg-bg-primary dark:bg-[#1D1D1D] rounded-xl shadow-sm p-6 lg:col-span-2 dark:shadow-[#383838]/10 border border-border dark:border-[#383838]">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-semibold dark:text-white">Doanh thu theo thời gian</h2>
+            <h2 className="text-lg font-semibold text-text-primary dark:text-white">Doanh thu theo thời gian</h2>
             <div className="flex space-x-2">
-              <button className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600">Ngày</button>
-              <button className="px-3 py-1 text-sm bg-rose-500 text-white rounded-md">Tuần</button>
-              <button className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600">Tháng</button>
+              <button className="px-3 py-1 text-sm bg-bg-secondary dark:bg-[#2A2A2A] text-text-secondary dark:text-[#B0B0B0] rounded-md hover:bg-border dark:hover:bg-[#383838]">Ngày</button>
+              <button className="px-3 py-1 text-sm bg-primary text-white rounded-md">Tuần</button>
+              <button className="px-3 py-1 text-sm bg-bg-secondary dark:bg-[#2A2A2A] text-text-secondary dark:text-[#B0B0B0] rounded-md hover:bg-border dark:hover:bg-[#383838]">Tháng</button>
             </div>
           </div>
           
@@ -184,20 +184,20 @@ export default function AdminDashboard() {
             {chartData.labels.map((label, index) => (
               <div key={label} className="flex-1 flex flex-col items-center">
                 <div 
-                  className="w-full bg-rose-500 hover:bg-rose-600 rounded-t-md transition-all" 
+                  className="w-full bg-primary hover:bg-primary-hover rounded-t-md transition-all" 
                   style={{ height: `${chartData.values[index]}%` }}
                 />
-                <div className="text-xs text-gray-600 dark:text-gray-400 mt-2">{label}</div>
+                <div className="text-xs text-text-secondary dark:text-[#B0B0B0] mt-2">{label}</div>
               </div>
             ))}
           </div>
-          <div className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+          <div className="mt-4 text-center text-sm text-text-secondary dark:text-[#B0B0B0]">
             Biểu đồ doanh thu 7 ngày gần nhất (đơn vị: triệu VNĐ)
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 dark:shadow-gray-800/10">
-          <h2 className="text-lg font-semibold mb-4 dark:text-white">Hoạt động mới nhất</h2>
+        <div className="bg-bg-primary dark:bg-[#1D1D1D] rounded-xl shadow-sm p-6 dark:shadow-[#383838]/10 border border-border dark:border-[#383838]">
+          <h2 className="text-lg font-semibold mb-4 text-text-primary dark:text-white">Hoạt động mới nhất</h2>
           <div className="space-y-4">
             <div className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
               <div className="bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 p-2 rounded-md">
@@ -244,9 +244,9 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 dark:shadow-gray-800/10">
+        <div className="bg-bg-primary dark:bg-[#1D1D1D] rounded-xl shadow-sm p-6 dark:shadow-[#383838]/10 border border-border dark:border-[#383838]">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold dark:text-white">Vị trí mới nhất</h2>
+            <h2 className="text-lg font-semibold text-text-primary dark:text-white">Vị trí mới nhất</h2>
             <Link href="/admin/locations" className="text-sm font-medium text-rose-500 hover:text-rose-600 transition-colors">
               Xem tất cả
             </Link>
@@ -278,9 +278,9 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 dark:shadow-gray-800/10">
+        <div className="bg-bg-primary dark:bg-[#1D1D1D] rounded-xl shadow-sm p-6 dark:shadow-[#383838]/10 border border-border dark:border-[#383838]">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold dark:text-white">Phòng đặt nhiều nhất</h2>
+            <h2 className="text-lg font-semibold text-text-primary dark:text-white">Phòng đặt nhiều nhất</h2>
             <Link href="/admin/rooms" className="text-sm font-medium text-rose-500 hover:text-rose-600 transition-colors">
               Xem tất cả
             </Link>
@@ -312,9 +312,9 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 dark:shadow-gray-800/10">
+        <div className="bg-bg-primary dark:bg-[#1D1D1D] rounded-xl shadow-sm p-6 dark:shadow-[#383838]/10 border border-border dark:border-[#383838]">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold dark:text-white">Người dùng mới</h2>
+            <h2 className="text-lg font-semibold text-text-primary dark:text-white">Người dùng mới</h2>
             <Link href="/admin/users" className="text-sm font-medium text-rose-500 hover:text-rose-600 transition-colors">
               Xem tất cả
             </Link>
@@ -348,14 +348,14 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 dark:shadow-gray-800/10">
+      <div className="bg-bg-primary dark:bg-[#1D1D1D] rounded-xl shadow-sm p-6 mb-8 dark:shadow-[#383838]/10 border border-border dark:border-[#383838]">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
           <div>
-            <h2 className="text-lg font-semibold dark:text-white">Thống kê hệ thống</h2>
-            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Tổng quan về hiệu suất của hệ thống.</p>
+            <h2 className="text-lg font-semibold text-text-primary dark:text-white">Thống kê hệ thống</h2>
+            <p className="text-text-secondary dark:text-[#B0B0B0] text-sm mt-1">Tổng quan về hiệu suất của hệ thống.</p>
           </div>
           <div className="mt-2 md:mt-0">
-            <select className="px-4 py-2 bg-gray-100 dark:bg-gray-700 dark:text-white rounded-lg text-sm border-0 focus:ring-2 focus:ring-rose-500">
+            <select className="px-4 py-2 bg-bg-secondary dark:bg-[#2A2A2A] dark:text-white rounded-lg text-sm border-0 focus:ring-2 focus:ring-rose-500">
               <option>7 ngày qua</option>
               <option>30 ngày qua</option>
               <option>3 tháng qua</option>
@@ -366,43 +366,43 @@ export default function AdminDashboard() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+          <div className="bg-bg-secondary dark:bg-[#2A2A2A] rounded-lg p-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Tỷ lệ đặt phòng</h3>
+              <h3 className="text-sm font-medium text-text-secondary dark:text-[#B0B0B0]">Tỷ lệ đặt phòng</h3>
               <span className="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-xs px-2 py-1 rounded-full">+12.5%</span>
             </div>
-            <p className="text-2xl font-bold mt-2 dark:text-white">68.54%</p>
-            <div className="mt-4 h-2 bg-gray-200 dark:bg-gray-600 rounded-full">
+            <p className="text-2xl font-bold mt-2 text-text-primary dark:text-white">68.54%</p>
+            <div className="mt-4 h-2 bg-bg-secondary dark:bg-[#2A2A2A] rounded-full">
               <div className="h-2 bg-green-500 rounded-full" style={{ width: '68.54%' }}></div>
             </div>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+          <div className="bg-bg-secondary dark:bg-[#2A2A2A] rounded-lg p-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Thời gian lưu trú TB</h3>
+              <h3 className="text-sm font-medium text-text-secondary dark:text-[#B0B0B0]">Thời gian lưu trú TB</h3>
               <span className="bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs px-2 py-1 rounded-full">+3.2%</span>
             </div>
-            <p className="text-2xl font-bold mt-2 dark:text-white">3.4 ngày</p>
-            <div className="mt-4 h-2 bg-gray-200 dark:bg-gray-600 rounded-full">
+            <p className="text-2xl font-bold mt-2 text-text-primary dark:text-white">3.4 ngày</p>
+            <div className="mt-4 h-2 bg-bg-secondary dark:bg-[#2A2A2A] rounded-full">
               <div className="h-2 bg-amber-500 rounded-full" style={{ width: '34%' }}></div>
             </div>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+          <div className="bg-bg-secondary dark:bg-[#2A2A2A] rounded-lg p-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Tỷ lệ hủy đặt phòng</h3>
+              <h3 className="text-sm font-medium text-text-secondary dark:text-[#B0B0B0]">Tỷ lệ hủy đặt phòng</h3>
               <span className="bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 text-xs px-2 py-1 rounded-full">-2.3%</span>
             </div>
-            <p className="text-2xl font-bold mt-2 dark:text-white">4.8%</p>
-            <div className="mt-4 h-2 bg-gray-200 dark:bg-gray-600 rounded-full">
+            <p className="text-2xl font-bold mt-2 text-text-primary dark:text-white">4.8%</p>
+            <div className="mt-4 h-2 bg-bg-secondary dark:bg-[#2A2A2A] rounded-full">
               <div className="h-2 bg-rose-500 rounded-full" style={{ width: '4.8%' }}></div>
             </div>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+          <div className="bg-bg-secondary dark:bg-[#2A2A2A] rounded-lg p-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Đánh giá trung bình</h3>
+              <h3 className="text-sm font-medium text-text-secondary dark:text-[#B0B0B0]">Đánh giá trung bình</h3>
               <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded-full">+0.2</span>
             </div>
-            <p className="text-2xl font-bold mt-2 dark:text-white">4.7 / 5</p>
-            <div className="mt-4 h-2 bg-gray-200 dark:bg-gray-600 rounded-full">
+            <p className="text-2xl font-bold mt-2 text-text-primary dark:text-white">4.7 / 5</p>
+            <div className="mt-4 h-2 bg-bg-secondary dark:bg-[#2A2A2A] rounded-full">
               <div className="h-2 bg-blue-500 rounded-full" style={{ width: '94%' }}></div>
             </div>
           </div>

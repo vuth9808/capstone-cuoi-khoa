@@ -1,13 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light mode colors */
+  --background: #FFFFFF;
+  --background-secondary: #F7F7F7;
+  --foreground: #222222;
+  --foreground-secondary: #717171;
+  --accent: #FF385C;
+  --border: #DDDDDD;
+  --button-primary: #FF385C;
+  --button-secondary: #222222;
+  --success: #008A05;
+  --warning: #C13515;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  /* Dark mode colors */
+  --background: #121212;
+  --background-secondary: #1D1D1D;
+  --foreground: #FFFFFF;
+  --foreground-secondary: #B0B0B0;
+  --accent: #FF385C;
+  --border: #383838;
+  --button-primary: #FF385C;
+  --button-secondary: #FFFFFF;
+  --success: #00C907;
+  --warning: #E84A35;
 }
 
 @theme inline {
@@ -21,4 +39,18 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Đảm bảo tất cả các phần tử đều áp dụng theme */
+html.dark {
+  color-scheme: dark;
+}
+
+html {
+  color-scheme: light;
+}
+
+/* Đảm bảo transition mượt mà khi chuyển đổi theme */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }

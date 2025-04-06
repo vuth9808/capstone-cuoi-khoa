@@ -19,6 +19,17 @@ const ClientLayout = ({ children }: ClientLayoutProps) => {
 
   useEffect(() => {
     setMounted(true);
+    
+    // Thêm Animate.css vào DOM
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
+    document.head.appendChild(link);
+    
+    return () => {
+      // Cleanup khi component unmount
+      document.head.removeChild(link);
+    };
   }, []);
 
   if (!mounted) {
@@ -30,7 +41,7 @@ const ClientLayout = ({ children }: ClientLayoutProps) => {
       <InitializeAuth />
       {!isAdminPage && <Header />}
       <Toaster position="top-center" />
-      <main className=" min-h-[calc(100vh-70px)]">{children}</main>
+      <main className="bg-bg-primary dark:bg-[#121212] min-h-[calc(100vh-70px)]">{children}</main>
       {!isAdminPage && <Footer />}
     </Providers>
   );

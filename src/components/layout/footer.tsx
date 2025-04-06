@@ -1,109 +1,148 @@
-import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Globe } from 'lucide-react';
+'use client';
 
-const footerLinks = [
-  {
-    category: 'Hỗ trợ',
-    links: [
-      { title: 'Trung tâm trợ giúp', href: '#' },
-      { title: 'AirCover', href: '#' },
-      { title: 'Chống phân biệt đối xử', href: '#' },
-      { title: 'Hỗ trợ người khuyết tật', href: '#' },
-      { title: 'Chính sách hủy', href: '#' }
-    ]
-  },
-  {
-    category: 'Cộng đồng',
-    links: [
-      { title: 'Airbnb.org: chỗ ở cứu trợ', href: '#' },
-      { title: 'Chống phân biệt đối xử', href: '#' },
-      { title: 'Tiêu chuẩn cộng đồng', href: '#' }
-    ]
-  },
-  {
-    category: 'Đón tiếp khách',
-    links: [
-      { title: 'Cho thuê nhà trên Airbnb', href: '/become-host' },
-      { title: 'AirCover cho chủ nhà', href: '#' },
-      { title: 'Tài nguyên cho chủ nhà', href: '#' },
-      { title: 'Diễn đàn cộng đồng', href: '#' }
-    ]
-  },
-  {
-    category: 'Airbnb',
-    links: [
-      { title: 'Về chúng tôi', href: '#' },
-      { title: 'Tuyển dụng', href: '#' },
-      { title: 'Tin tức', href: '#' },
-      { title: 'Nhà đầu tư', href: '#' },
-      { title: 'Chương trình Affiliate', href: '#' }
-    ]
-  }
-];
+import Link from 'next/link';
+import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, Mail } from 'lucide-react';
+
+// Mock data for footer
+const footerData = {
+  support: [
+    { label: 'Trung tâm hỗ trợ', href: '#' },
+    { label: 'Liên hệ với chúng tôi', href: '#' },
+    { label: 'Chính sách hủy phòng', href: '#' },
+    { label: 'Thông tin an toàn', href: '#' },
+    { label: 'Thư viện Animation', href: '/animation-examples' },
+  ],
+  hosting: [
+    { label: 'Trở thành chủ nhà', href: '/become-host' },
+    { label: 'Đón tiếp khách có trách nhiệm', href: '#' },
+    { label: 'Tài nguyên cho chủ nhà', href: '#' },
+    { label: 'Diễn đàn cộng đồng', href: '#' },
+  ],
+  company: [
+    { label: 'Giới thiệu', href: '#' },
+    { label: 'Cơ hội nghề nghiệp', href: '#' },
+    { label: 'Nhà đầu tư', href: '#' },
+    { label: 'Tin tức', href: '#' },
+  ],
+  policies: [
+    { label: 'Điều khoản sử dụng', href: '#' },
+    { label: 'Chính sách riêng tư', href: '#' },
+    { label: 'Cài đặt cookie', href: '#' },
+    { label: 'Sơ đồ trang', href: '#' },
+  ],
+};
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="bg-airbnb-foggy dark:bg-gray-800 pt-8 pb-6 border-t dark:border-gray-700">
+    <footer className="bg-bg-primary dark:bg-[#1D1D1D] border-t border-border dark:border-[#383838] pt-10">
       <div className="container mx-auto px-4">
-        {/* Footer links */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {footerLinks.map((section, index) => (
-            <div key={index}>
-              <h4 className="text-airbnb-hof dark:text-white font-semibold mb-4">{section.category}</h4>
-              <ul className="space-y-3">
-                {section.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <Link 
-                      href={link.href} 
-                      className="text-gray-600 dark:text-gray-300 hover:text-airbnb-rosa hover:underline text-sm"
-                    >
-                      {link.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Divider */}
-        <div className="border-t border-gray-200 dark:border-gray-700 my-6"></div>
-
-        {/* Footer bottom */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between">
-          <div className="flex flex-col md:flex-row md:items-center md:space-x-4">
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              &copy; {currentYear} Airbnb Clone
-            </p>
-            <div className="flex space-x-4 md:space-x-3 my-2 md:my-0">
-              <Link href="#" className="text-sm text-gray-600 dark:text-gray-300 hover:text-airbnb-rosa hover:underline">Quyền riêng tư</Link>
-              <span className="text-gray-600 dark:text-gray-400 hidden md:inline">&middot;</span>
-              <Link href="#" className="text-sm text-gray-600 dark:text-gray-300 hover:text-airbnb-rosa hover:underline">Điều khoản</Link>
-              <span className="text-gray-600 dark:text-gray-400 hidden md:inline">&middot;</span>
-              <Link href="#" className="text-sm text-gray-600 dark:text-gray-300 hover:text-airbnb-rosa hover:underline">Sơ đồ trang web</Link>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+          {/* Support section */}
+          <div className="animate__animated animate__fadeInUp animate__delay-1s">
+            <h3 className="text-text-primary dark:text-white font-semibold mb-4">Hỗ trợ</h3>
+            <ul className="space-y-3">
+              {footerData.support.map((item) => (
+                <li key={item.label}>
+                  <Link 
+                    href={item.href} 
+                    className="text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-
-          <div className="flex items-center mt-4 md:mt-0 space-x-6">
-            <div className="flex items-center text-airbnb-hof dark:text-white">
-              <Globe className="h-4 w-4 mr-2" />
-              <span className="text-sm font-medium">Tiếng Việt (VN)</span>
+          
+          {/* Hosting section */}
+          <div className="animate__animated animate__fadeInUp animate__delay-2s">
+            <h3 className="text-text-primary dark:text-white font-semibold mb-4">Đón tiếp khách</h3>
+            <ul className="space-y-3">
+              {footerData.hosting.map((item) => (
+                <li key={item.label}>
+                  <Link 
+                    href={item.href} 
+                    className="text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          {/* Company section */}
+          <div className="animate__animated animate__fadeInUp animate__delay-3s">
+            <h3 className="text-text-primary dark:text-white font-semibold mb-4">Công ty</h3>
+            <ul className="space-y-3">
+              {footerData.company.map((item) => (
+                <li key={item.label}>
+                  <Link 
+                    href={item.href} 
+                    className="text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          {/* Policies section */}
+          <div className="animate__animated animate__fadeInUp animate__delay-4s">
+            <h3 className="text-text-primary dark:text-white font-semibold mb-4">Chính sách</h3>
+            <ul className="space-y-3">
+              {footerData.policies.map((item) => (
+                <li key={item.label}>
+                  <Link 
+                    href={item.href} 
+                    className="text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        
+        {/* Language and currency */}
+        <div className="py-6 border-t border-border dark:border-[#383838] animate__animated animate__fadeIn animate__delay-5s">
+          <div className="flex flex-wrap justify-between items-center">
+            <div className="flex flex-wrap gap-4 mb-4 md:mb-0">
+              <button className="flex items-center text-text-primary dark:text-white hover:underline animate__animated animate__pulse animate__slower animate__infinite">
+                <Globe className="h-4 w-4 mr-2" />
+                Tiếng Việt
+              </button>
+              <button className="text-text-primary dark:text-white hover:underline">₫ VND</button>
             </div>
-
-            <div className="flex space-x-4">
-              <a href="#" aria-label="Facebook" className="text-airbnb-hof dark:text-gray-300 hover:text-airbnb-rosa">
+            
+            <div className="flex gap-4">
+              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" aria-label="Twitter" className="text-airbnb-hof dark:text-gray-300 hover:text-airbnb-rosa">
+              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" aria-label="Instagram" className="text-airbnb-hof dark:text-gray-300 hover:text-airbnb-rosa">
+              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
                 <Instagram className="h-5 w-5" />
+              </a>
+              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
+                <Youtube className="h-5 w-5" />
+              </a>
+              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
+                <Mail className="h-5 w-5" />
               </a>
             </div>
           </div>
+        </div>
+        
+        {/* Copyright */}
+        <div className="py-6 text-center text-text-secondary dark:text-[#B0B0B0] text-sm animate__animated animate__fadeIn animate__delay-5s">
+          &copy; {new Date().getFullYear()} Airbnb, Inc. Đã đăng ký bản quyền.
         </div>
       </div>
     </footer>
