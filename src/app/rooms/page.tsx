@@ -30,6 +30,7 @@ import {
   Heart
 } from 'lucide-react';
 import { useAuthStore } from '@/store/auth.store';
+import { animateElement, AnimationTypes } from '@/utils/animation';
 
 export default function RoomsPage() {
   const router = useRouter();
@@ -142,10 +143,15 @@ export default function RoomsPage() {
       return;
     }
     
+    const button = e.currentTarget as HTMLButtonElement;
+    
     if (isFavorite(room.id, 'room')) {
-      removeFavorite(room.id, 'room');
-      toast.success(`Đã xóa "${room.tenPhong}" khỏi danh sách yêu thích`);
+      animateElement(button, AnimationTypes.BOUNCE).then(() => {
+        removeFavorite(room.id, 'room');
+        toast.success(`Đã xóa "${room.tenPhong}" khỏi danh sách yêu thích`);
+      });
     } else {
+      animateElement(button, AnimationTypes.HEART_BEAT);
       addFavorite(room.id, 'room');
       toast.success(`Đã thêm "${room.tenPhong}" vào danh sách yêu thích`);
     }
@@ -166,7 +172,7 @@ export default function RoomsPage() {
       {/* Location header */}
       {location ? (
         
-        <div className="relative h-64 md:h-80 bg-gradient-to-r from-airbnb-rosa to-airbnb-kazan overflow-hidden">
+        <div className="relative h-64 md:h-80 bg-gradient-to-r from-airbnb-rosa to-airbnb-kazan overflow-hidden animate__animated animate__fadeIn">
           
           <div className="absolute inset-0 opacity-30">
             <Image 
@@ -180,19 +186,19 @@ export default function RoomsPage() {
           </div>
           <div className="absolute inset-0 bg-black opacity-30"></div>
           <div className="relative container mx-auto px-4 h-full flex flex-col justify-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 animate__animated animate__fadeInDown animate__delay-1s">
               Phòng tại {location.tenViTri}
-          </h1>
-            <div className="flex items-center text-white">
+            </h1>
+            <div className="flex items-center text-white animate__animated animate__fadeInUp animate__delay-1s">
               <MapPin className="h-5 w-5 mr-2" />
               <p className="text-lg">
-            {location.tinhThanh}, {location.quocGia}
-          </p>
+                {location.tinhThanh}, {location.quocGia}
+              </p>
             </div>
           </div>
         </div>
       ) : (
-        <div className="relative h-64 md:h-80 bg-gradient-to-r from-airbnb-rosa to-airbnb-kazan overflow-hidden">
+        <div className="relative h-64 md:h-80 bg-gradient-to-r from-airbnb-rosa to-airbnb-kazan overflow-hidden animate__animated animate__fadeIn">
           <div className="absolute inset-0 opacity-30">
             <Image 
               src="https://picsum.photos/1200/400" 
@@ -205,10 +211,10 @@ export default function RoomsPage() {
           </div>
           <div className="absolute inset-0 bg-black opacity-30"></div>
           <div className="relative container mx-auto px-4 h-full flex flex-col justify-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 animate__animated animate__fadeInDown animate__delay-1s">
               Khám phá các phòng của chúng tôi
             </h1>
-            <p className="text-lg text-white">
+            <p className="text-lg text-white animate__animated animate__fadeInUp animate__delay-1s">
               Tìm phòng hoàn hảo cho chuyến đi của bạn
             </p>
           </div>
@@ -217,7 +223,7 @@ export default function RoomsPage() {
 
       {/* Search and filter bar */}
       <div className="container mx-auto px-4">
-        <div className="bg-white rounded-xl shadow-lg -mt-10 relative z-10 p-4 md:p-6 mb-8">
+        <div className="bg-white rounded-xl shadow-lg -mt-10 relative z-10 p-4 md:p-6 mb-8 animate__animated animate__fadeInUp animate__delay-2s">
           <div className="flex flex-col md:flex-row justify-between gap-4">
             <div className="relative flex-1">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -243,7 +249,7 @@ export default function RoomsPage() {
           
           {/* Expanded filter options */}
           {isFilterOpen && (
-            <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-4 animate__animated animate__fadeIn">
               <div>
                 <label className="block text-sm font-medium text-airbnb-hof mb-1">Khoảng giá</label>
                 <div className="flex items-center gap-2">
@@ -333,7 +339,7 @@ export default function RoomsPage() {
       
       {/* Results count */}
       <div className="container mx-auto px-4 mb-6">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center animate__animated animate__fadeIn animate__delay-3s">
         <button
             onClick={() => router.back()}
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-rose-600 hover:bg-rose-700"
@@ -381,7 +387,7 @@ export default function RoomsPage() {
         {filteredRooms.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredRooms.map((room, index) => (
-              <div key={room.id} className="group relative">
+              <div key={room.id} className={`group relative animate__animated animate__fadeIn animate__delay-${index % 5}s`}>
                 <Link
                   href={`/rooms/${room.id}`}
                   className="block bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow"
@@ -464,12 +470,13 @@ export default function RoomsPage() {
                 {/* Favorite button */}
                 <button 
                   onClick={(e) => handleFavoriteToggle(e, room)}
-                  className="absolute top-3 right-3 z-10 bg-white p-2 rounded-full shadow-md transition-opacity duration-200"
+                  className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:scale-110 transition-all duration-200 hover:shadow-lg active:scale-95"
+                  aria-label={isFavorite(room.id, 'room') ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"}
                 >
-                  <Heart className={`h-5 w-5 ${
+                  <Heart className={`h-5 w-5 transition-all duration-200 ${
                     isFavorite(room.id, 'room') 
-                      ? 'text-airbnb-rosa fill-airbnb-rosa' 
-                      : 'text-airbnb-rosa'
+                      ? 'text-red-500 fill-red-500 scale-110' 
+                      : 'text-gray-500 hover:text-red-500'
                   }`} />
                 </button>
               </div>

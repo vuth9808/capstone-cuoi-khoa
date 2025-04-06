@@ -9,6 +9,30 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Light mode colors
+        primary: {
+          DEFAULT: '#FF385C', // accent color
+          hover: '#E31C5F',
+          light: '#FF6B81',
+        },
+        text: {
+          primary: '#222222',
+          secondary: '#717171',
+        },
+        bg: {
+          primary: '#FFFFFF',
+          secondary: '#F7F7F7',
+        },
+        border: '#DDDDDD',
+        btn: {
+          primary: '#FF385C',
+          secondary: '#222222',
+        },
+        success: '#008A05',
+        warning: '#C13515',
+        
+        // Dark mode specific colors are handled through the 'dark:' variant in classes
+        // The 'airbnb' palette is kept for backward compatibility
         airbnb: {
           rosa: '#FF5A5F',     // Airbnb Red - Màu chính
           rausch: '#E31C5F',   // Đỏ đậm - Màu CTA

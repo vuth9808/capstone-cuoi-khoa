@@ -20,6 +20,8 @@ import { getValidImageUrl } from "@/utils/image";
 import { ApiResponse } from "@/config/axios.config";
 import { useFavorites } from "@/contexts/favorites.context";
 import { toast } from "react-hot-toast";
+import { useAuthStore } from "@/store/auth.store";
+import { animateElement, AnimationTypes } from "@/utils/animation";
 
 export default function LocationsPage() {
   const router = useRouter();
@@ -29,6 +31,7 @@ export default function LocationsPage() {
   const [mounted, setMounted] = useState(false);
 
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+  const { user } = useAuthStore();
 
   const { data: locationsData, isLoading } = useQuery<ApiResponse<Location[]>>({
     queryKey: ["locations"],
@@ -75,10 +78,20 @@ export default function LocationsPage() {
     e.preventDefault();
     e.stopPropagation();
 
+    if (!user) {
+      toast.error('Bạn cần đăng nhập để sử dụng tính năng yêu thích');
+      return;
+    }
+    
+    const button = e.currentTarget as HTMLButtonElement;
+    
     if (isFavorite(location.id, "location")) {
-      removeFavorite(location.id, "location");
-      toast.success(`Đã xóa ${location.tenViTri} khỏi danh sách yêu thích`);
+      animateElement(button, AnimationTypes.BOUNCE).then(() => {
+        removeFavorite(location.id, "location");
+        toast.success(`Đã xóa ${location.tenViTri} khỏi danh sách yêu thích`);
+      });
     } else {
+      animateElement(button, AnimationTypes.HEART_BEAT);
       addFavorite(location.id, "location");
       toast.success(`Đã thêm ${location.tenViTri} vào danh sách yêu thích`);
     }
@@ -109,10 +122,10 @@ export default function LocationsPage() {
         </div>
         <div className="absolute inset-0 bg-black opacity-30"></div>
         <div className="relative container mx-auto px-4 h-full flex flex-col justify-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 animate__animated animate__fadeInDown">
             Khám phá các điểm đến tuyệt vời
           </h1>
-          <p className="text-xl text-white max-w-2xl">
+          <p className="text-xl text-white max-w-2xl animate__animated animate__fadeInUp animate__delay-1s">
             Tìm kiếm và khám phá các địa điểm thú vị cho chuyến đi tiếp theo của
             bạn
           </p>
@@ -121,7 +134,7 @@ export default function LocationsPage() {
 
       {/* Search and filter section */}
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-white rounded-xl shadow-lg -mt-10 md:-mt-12 relative z-10 p-4 md:p-6">
+        <div className="bg-white rounded-xl shadow-lg -mt-10 md:-mt-12 relative z-10 p-4 md:p-6 animate__animated animate__fadeInUp animate__delay-1s">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -155,7 +168,7 @@ export default function LocationsPage() {
         {/* Results section */}
         <div className="py-8">
           <div className="container mx-auto px-4 mb-6">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center animate__animated animate__fadeIn animate__delay-2s">
               <button
                 onClick={() => router.back()}
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-rose-600 hover:bg-rose-700"
@@ -173,8 +186,8 @@ export default function LocationsPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredLocations.map((location) => (
-              <div key={location.id} className="group relative">
+            {filteredLocations.map((location, index) => (
+              <div key={location.id} className={`group relative animate__animated animate__fadeIn animate__delay-${index % 5}s`}>
                 <Link
                   href={`/rooms?locationId=${location.id}`}
                   className="group cursor-pointer block"
@@ -209,7 +222,7 @@ export default function LocationsPage() {
                 </Link>
                 <button
                   onClick={(e) => handleFavoriteToggle(e, location)}
-                  className="absolute top-3 right-3 z-10 bg-white p-2 rounded-full shadow-md hover:shadow-lg transition-all"
+                  className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:scale-110 transition-all duration-200 hover:shadow-lg active:scale-95"
                   aria-label={
                     isFavorite(location.id, "location")
                       ? "Xóa khỏi yêu thích"
@@ -217,10 +230,10 @@ export default function LocationsPage() {
                   }
                 >
                   <Heart
-                    className={`h-5 w-5 ${
+                    className={`h-5 w-5 transition-all duration-200 ${
                       isFavorite(location.id, "location")
-                        ? "text-airbnb-rosa fill-airbnb-rosa"
-                        : "text-airbnb-rosa"
+                        ? "text-red-500 fill-red-500 scale-110"
+                        : "text-gray-500 hover:text-red-500"
                     }`}
                   />
                 </button>
