@@ -169,15 +169,24 @@ export default function AdminRoomsPage() {
     if (!window.confirm('Bạn có chắc chắn muốn xóa phòng này?')) {
       return;
     }
-
+  
+    const toastId = 'delete-error'; // dùng chung 1 id cho lỗi
+  
     try {
       await roomService.deleteRoom(id);
-      toast.success('Xóa phòng thành công!');
-      fetchRooms();
-    } catch {
-      toast.error('Không thể xóa phòng');
+      await fetchRooms();
+      toast.dismiss(); // xoá mọi toast trước đó
+      toast.success('Xóa phòng thành công!', { id: 'delete-success' });
+    } catch (error: any) {
+      toast.dismiss(toastId); // ngăn việc hiện toast 2 lần
+      if (error?.response?.status === 403) {
+        toast.error('Bạn không có quyền xóa phòng này!', { id: toastId });
+      } else {
+        toast.error('Không thể xóa phòng. Vui lòng thử lại!', { id: toastId });
+      }
     }
   };
+  
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -235,7 +244,7 @@ export default function AdminRoomsPage() {
               });
               setIsModalOpen(true);
             }}
-            className="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto"
+            className="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto cursor-pointer"
           >
             Thêm phòng
           </button>
@@ -255,7 +264,7 @@ export default function AdminRoomsPage() {
         <button
           type="button"
           onClick={handleSearch}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer"
         >
           Tìm kiếm
         </button>
@@ -318,14 +327,14 @@ export default function AdminRoomsPage() {
                         <button
                           type="button"
                           onClick={() => handleEdit(room)}
-                          className="text-primary hover:text-primary-hover mr-4"
+                          className="text-primary hover:text-primary-hover mr-4 cursor-pointer"
                         >
                           Sửa
                         </button>
                         <button
                           type="button"
                           onClick={() => handleDelete(room.id)}
-                          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 cursor-pointer"
                         >
                           Xóa
                         </button>

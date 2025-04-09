@@ -194,7 +194,7 @@ export default function AdminLayout({
               {/* Theme toggle */}
               <button 
                 onClick={toggleTheme}
-                className="p-2 text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white rounded-full hover:bg-bg-secondary dark:hover:bg-[#2A2A2A]"
+                className="p-2 text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white rounded-full hover:bg-bg-secondary dark:hover:bg-[#2A2A2A] cursor-pointer"
                 aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}

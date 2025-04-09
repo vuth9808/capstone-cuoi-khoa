@@ -66,6 +66,8 @@ export const roomService = {
   },
 
   deleteRoom: async (id: number): Promise<ApiResponse<void>> => {
+    const token = localStorage.getItem('token');
+    console.log('Token used for deleteRoom:', token);
     return axiosInstance.delete(`/phong-thue/${id}`);
   },
 };
