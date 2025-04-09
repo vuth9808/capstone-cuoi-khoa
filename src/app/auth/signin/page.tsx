@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -44,31 +43,18 @@ export default function SigninPage() {
 
   return (
     <div className="max-w-md w-full space-y-8">
-      <div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Đăng nhập
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Hoặc{' '}
-          <Link
-            href="/auth/signup"
-            className="font-medium text-primary-600 hover:text-primary-500"
-          >
-            đăng ký tài khoản mới
-          </Link>
-        </p>
-      </div>
-      <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-        <div className="rounded-md shadow-sm -space-y-px">
+      
+      <form className="mt-8 space-y-10" onSubmit={handleSubmit(onSubmit)}>
+        <div className="rounded-md shadow-sm space-y-4">
           <div>
-            <label htmlFor="email" className="sr-only">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
             </label>
             <input
               id="email"
               type="email"
               {...register('email')}
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
+              className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
               placeholder="Email"
             />
             {errors.email && (
@@ -76,14 +62,14 @@ export default function SigninPage() {
             )}
           </div>
           <div>
-            <label htmlFor="password" className="sr-only">
-              Mật khẩu
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              Mật khẩu 
             </label>
             <input
               id="password"
               type="password"
               {...register('password')}
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
+              className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
               placeholder="Mật khẩu"
             />
             {errors.password && (

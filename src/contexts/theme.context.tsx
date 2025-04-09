@@ -49,11 +49,27 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     
     if (theme === 'dark') {
       htmlElement.classList.add('dark');
-      document.body.style.backgroundColor = '#121212'; // Đảm bảo màu nền được áp dụng ngay lập tức
+      // Cập nhật biến CSS để áp dụng dark mode
+      document.body.style.backgroundColor = 'var(--background)';
+      document.body.style.color = 'var(--foreground)';
     } else {
       htmlElement.classList.remove('dark');
-      document.body.style.backgroundColor = '#FFFFFF'; // Đảm bảo màu nền được áp dụng ngay lập tức
+      // Cập nhật biến CSS để áp dụng light mode
+      document.body.style.backgroundColor = 'var(--background)';
+      document.body.style.color = 'var(--foreground)';
     }
+    
+    // Cập nhật meta theme-color để phù hợp với theme
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute(
+        'content',
+        theme === 'dark' ? '#121212' : '#FFFFFF'
+      );
+    }
+
+    // Thêm data attribute cho CSS selector
+    document.documentElement.setAttribute('data-theme', theme);
     
     // Lưu lựa chọn vào localStorage
     try {

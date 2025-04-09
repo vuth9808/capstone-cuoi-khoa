@@ -58,7 +58,7 @@ export default function BecomeHostPage() {
       {/* Hero Section */}
       <div className="relative h-96 lg:h-[500px]">
         <Image
-          src="https://a0.muscache.com/im/pictures/a2704500-b282-4411-a2fb-d7f80151a5ff.jpg"
+          src="https://s3.ap-southeast-1.amazonaws.com/cdn.vntre.vn/default/airbnb-la-gi-4-1726623915.jpg"
           alt="Become a host"
           fill
           priority

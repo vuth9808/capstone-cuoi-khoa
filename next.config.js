@@ -46,6 +46,22 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.spinxdigital.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.citypng.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 's3.ap-southeast-1.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.cntraveler.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.brandfetch.io',
+      },
     ],
   },
 };

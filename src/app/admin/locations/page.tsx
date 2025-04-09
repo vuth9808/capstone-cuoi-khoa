@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 import { locationService } from '@/services/location.service';
@@ -23,7 +23,7 @@ export default function AdminLocationsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
-  const handleFilterLocations = () => {
+  const handleFilterLocations = useCallback(() => {
     let filteredLocations = allLocations;
 
     // Lọc theo searchTerm nếu có
@@ -39,7 +39,7 @@ export default function AdminLocationsPage() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedLocations = filteredLocations.slice(startIndex, startIndex + itemsPerPage);
     setLocations(paginatedLocations);
-  };
+  }, [allLocations, searchTerm, currentPage, itemsPerPage]);
 
   useEffect(() => {
     fetchLocations();
@@ -48,7 +48,7 @@ export default function AdminLocationsPage() {
   useEffect(() => {
     // Khi allLocations hoặc searchTerm thay đổi, lọc và phân trang lại
     handleFilterLocations();
-  }, [allLocations, searchTerm, currentPage, handleFilterLocations]);
+  }, [handleFilterLocations]);
 
   const fetchLocations = async () => {
     try {
@@ -63,7 +63,6 @@ export default function AdminLocationsPage() {
 
   const handleSearch = () => {
     setCurrentPage(1); // Reset về trang 1 khi tìm kiếm
-    handleFilterLocations();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

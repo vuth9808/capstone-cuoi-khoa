@@ -41,39 +41,41 @@ export default function AuthLayout({
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md">
-        <Link href="/" className="flex justify-center mb-8">
-          <h1 className="text-rose-500 text-3xl font-bold">airbnb</h1>
+    <div className="relative min-h-screen flex flex-col items-center justify-center bg-[url(https://media.cntraveler.com/photos/5d112d50c4d7bd806dbc00a4/16:9/w_2560%2Cc_limit/airbnb%2520luxe.jpg)] bg-center bg-cover">
+  
+  {/* Overlay gradient/màu tối */}
+  <div className="absolute inset-0 bg-black/30" />
+
+  {/* Nội dung chính */}
+  <div className="relative z-10 w-full max-w-md">
+    <div className="bg-white p-8 rounded-lg shadow-md w-full">
+      <div className="flex gap-4 mb-6">
+        <Link
+          href="/auth/signin"
+          className={`flex-1 text-center py-2 rounded-lg ${
+            pathname === '/auth/signin'
+              ? 'bg-black text-white'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}
+        >
+          Đăng nhập
         </Link>
-
-        <div className="bg-white p-8 rounded-lg shadow-md w-full">
-          <div className="flex gap-4 mb-6">
-            <Link
-              href="/auth/signin"
-              className={`flex-1 text-center py-2 rounded-lg ${
-                pathname === '/auth/signin'
-                  ? 'bg-rose-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/auth/signup"
-              className={`flex-1 text-center py-2 rounded-lg ${
-                pathname === '/auth/signup'
-                  ? 'bg-rose-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Sign Up
-            </Link>
-          </div>
-
-          {children}
-        </div>
+        <Link
+          href="/auth/signup"
+          className={`flex-1 text-center py-2 rounded-lg ${
+            pathname === '/auth/signup'
+              ? 'bg-black text-white'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}
+        >
+          Đăng ký
+        </Link>
       </div>
+
+      {children}
     </div>
+  </div>
+</div>
+
   );
 }

@@ -34,18 +34,18 @@ const footerData = {
 
 export default function Footer() {
   return (
-    <footer className="bg-bg-primary dark:bg-[#1D1D1D] border-t border-border dark:border-[#383838] pt-10">
+    <footer className="bg-theme-primary border-t border-theme pt-10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           {/* Support section */}
           <div className="animate__animated animate__fadeInUp animate__delay-1s">
-            <h3 className="text-text-primary dark:text-white font-semibold mb-4">Hỗ trợ</h3>
+            <h3 className="text-theme-primary font-semibold mb-4">Hỗ trợ</h3>
             <ul className="space-y-3">
               {footerData.support.map((item) => (
                 <li key={item.label}>
                   <Link 
                     href={item.href} 
-                    className="text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white transition-colors"
+                    className="text-theme-secondary hover:text-theme-primary transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -56,13 +56,13 @@ export default function Footer() {
           
           {/* Hosting section */}
           <div className="animate__animated animate__fadeInUp animate__delay-2s">
-            <h3 className="text-text-primary dark:text-white font-semibold mb-4">Đón tiếp khách</h3>
+            <h3 className="text-theme-primary font-semibold mb-4">Đón tiếp khách</h3>
             <ul className="space-y-3">
               {footerData.hosting.map((item) => (
                 <li key={item.label}>
                   <Link 
                     href={item.href} 
-                    className="text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white transition-colors"
+                    className="text-theme-secondary hover:text-theme-primary transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -73,13 +73,13 @@ export default function Footer() {
           
           {/* Company section */}
           <div className="animate__animated animate__fadeInUp animate__delay-3s">
-            <h3 className="text-text-primary dark:text-white font-semibold mb-4">Công ty</h3>
+            <h3 className="text-theme-primary font-semibold mb-4">Công ty</h3>
             <ul className="space-y-3">
               {footerData.company.map((item) => (
                 <li key={item.label}>
                   <Link 
                     href={item.href} 
-                    className="text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white transition-colors"
+                    className="text-theme-secondary hover:text-theme-primary transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -90,13 +90,13 @@ export default function Footer() {
           
           {/* Policies section */}
           <div className="animate__animated animate__fadeInUp animate__delay-4s">
-            <h3 className="text-text-primary dark:text-white font-semibold mb-4">Chính sách</h3>
+            <h3 className="text-theme-primary font-semibold mb-4">Chính sách</h3>
             <ul className="space-y-3">
               {footerData.policies.map((item) => (
                 <li key={item.label}>
                   <Link 
                     href={item.href} 
-                    className="text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white transition-colors"
+                    className="text-theme-secondary hover:text-theme-primary transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -107,33 +107,33 @@ export default function Footer() {
         </div>
         
         {/* Language and currency */}
-        <div className="py-6 border-t border-border dark:border-[#383838] animate__animated animate__fadeIn animate__delay-5s">
+        <div className="py-6 border-t border-theme animate__animated animate__fadeIn animate__delay-5s">
           <div className="flex flex-wrap justify-between items-center">
             <div className="flex flex-wrap gap-4 mb-4 md:mb-0">
-              <button className="flex items-center text-text-primary dark:text-white hover:underline animate__animated animate__pulse animate__slower animate__infinite">
+              <button className="flex items-center text-theme-primary hover:underline animate__animated animate__pulse animate__slower animate__infinite">
                 <Globe className="h-4 w-4 mr-2" />
                 Tiếng Việt
               </button>
-              <button className="text-text-primary dark:text-white hover:underline">₫ VND</button>
+              <button className="text-theme-primary hover:underline">₫ VND</button>
             </div>
             
             <div className="flex gap-4">
-              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
+              <a href="#" className="text-theme-primary hover:text-primary animate__animated animate__pulse animate__slower">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
+              <a href="#" className="text-theme-primary hover:text-primary animate__animated animate__pulse animate__slower">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
+              <a href="#" className="text-theme-primary hover:text-primary animate__animated animate__pulse animate__slower">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
+              <a href="#" className="text-theme-primary hover:text-primary animate__animated animate__pulse animate__slower">
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
+              <a href="#" className="text-theme-primary hover:text-primary animate__animated animate__pulse animate__slower">
                 <Youtube className="h-5 w-5" />
               </a>
-              <a href="#" className="text-text-primary dark:text-white hover:text-primary animate__animated animate__pulse animate__slower">
+              <a href="#" className="text-theme-primary hover:text-primary animate__animated animate__pulse animate__slower">
                 <Mail className="h-5 w-5" />
               </a>
             </div>
@@ -141,7 +141,7 @@ export default function Footer() {
         </div>
         
         {/* Copyright */}
-        <div className="py-6 text-center text-text-secondary dark:text-[#B0B0B0] text-sm animate__animated animate__fadeIn animate__delay-5s">
+        <div className="py-6 text-center text-theme-secondary text-sm animate__animated animate__fadeIn animate__delay-5s">
           &copy; {new Date().getFullYear()} Airbnb, Inc. Đã đăng ký bản quyền.
         </div>
       </div>
