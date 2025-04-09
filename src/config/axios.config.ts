@@ -82,8 +82,12 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error('Request error:', error.message);
-    return Promise.reject(error);
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.content ||
+      'Đã xảy ra lỗi không xác định';
+
+    return Promise.reject(new Error(message));
   }
 );
 

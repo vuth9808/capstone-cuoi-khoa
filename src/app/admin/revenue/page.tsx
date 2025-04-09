@@ -252,7 +252,7 @@ export default function AdminRevenuePage() {
         </div>
         <div className="p-6 flex flex-wrap gap-4">
           <button
-            className={`px-4 py-2 rounded-md text-sm font-medium ${
+            className={`px-4 py-2 rounded-md text-sm font-medium cursor-pointer ${
               timeFilter === TIME_FILTERS.ALL
                 ? 'bg-theme-primary text-theme-secondary'
                 : 'bg-theme-secondary text-theme-primary hover:bg-theme-secondary-hover'
@@ -262,7 +262,7 @@ export default function AdminRevenuePage() {
             Tất cả thời gian
           </button>
           <button
-            className={`px-4 py-2 rounded-md text-sm font-medium ${
+            className={`px-4 py-2 rounded-md text-sm font-medium cursor-pointer ${
               timeFilter === TIME_FILTERS.THIS_MONTH
                 ? 'bg-theme-primary text-theme-secondary'
                 : 'bg-theme-secondary text-theme-primary hover:bg-theme-secondary-hover'
@@ -272,7 +272,7 @@ export default function AdminRevenuePage() {
             Tháng này
           </button>
           <button
-            className={`px-4 py-2 rounded-md text-sm font-medium ${
+            className={`px-4 py-2 rounded-md text-sm font-medium cursor-pointer ${
               timeFilter === TIME_FILTERS.LAST_MONTH
                 ? 'bg-theme-primary text-theme-secondary'
                 : 'bg-theme-secondary text-theme-primary hover:bg-theme-secondary-hover'
@@ -282,7 +282,7 @@ export default function AdminRevenuePage() {
             Tháng trước
           </button>
           <button
-            className={`px-4 py-2 rounded-md text-sm font-medium ${
+            className={`px-4 py-2 rounded-md text-sm font-medium cursor-pointer ${
               timeFilter === TIME_FILTERS.THIS_YEAR
                 ? 'bg-theme-primary text-theme-secondary'
                 : 'bg-theme-secondary text-theme-primary hover:bg-theme-secondary-hover'
@@ -293,7 +293,7 @@ export default function AdminRevenuePage() {
           </button>
           {timeFilter !== TIME_FILTERS.ALL && (
             <button
-              className="px-4 py-2 rounded-md text-sm font-medium bg-theme-secondary text-theme-primary hover:bg-theme-secondary-hover flex items-center"
+              className="px-4 py-2 rounded-md text-sm font-medium bg-theme-secondary text-theme-primary hover:bg-theme-secondary-hover flex items-center cursor-pointer"
               onClick={() => handleTimeFilterChange(TIME_FILTERS.ALL)}
             >
               <FilterX className="h-4 w-4 mr-1" />

@@ -113,7 +113,7 @@ export default function AdminUsersPage() {
         <button
           type="button"
           onClick={handleSearch}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer"
         >
           Tìm kiếm
         </button>
@@ -202,7 +202,7 @@ export default function AdminUsersPage() {
                         <button
                           type="button"
                           onClick={() => handleDelete(user.id)}
-                          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 cursor-pointer"
                         >
                           Xóa
                         </button>

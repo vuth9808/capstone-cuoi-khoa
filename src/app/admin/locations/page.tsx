@@ -26,7 +26,6 @@ export default function AdminLocationsPage() {
   const handleFilterLocations = useCallback(() => {
     let filteredLocations = allLocations;
 
-    // Lọc theo searchTerm nếu có
     if (searchTerm) {
       filteredLocations = allLocations.filter(location =>
         location.tenViTri.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -35,18 +34,16 @@ export default function AdminLocationsPage() {
       );
     }
 
-    // Phân trang
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedLocations = filteredLocations.slice(startIndex, startIndex + itemsPerPage);
     setLocations(paginatedLocations);
-  }, [allLocations, searchTerm, currentPage, itemsPerPage]);
+  }, [allLocations, searchTerm, currentPage]);
 
   useEffect(() => {
     fetchLocations();
   }, []);
 
   useEffect(() => {
-    // Khi allLocations hoặc searchTerm thay đổi, lọc và phân trang lại
     handleFilterLocations();
   }, [handleFilterLocations]);
 
@@ -54,20 +51,20 @@ export default function AdminLocationsPage() {
     try {
       const response = await locationService.getLocations();
       setAllLocations(response.content);
-      setIsLoading(false);
-    } catch {
-      toast.error('Không thể tải danh sách địa điểm');
+    } catch (err: any) {
+      toast.error(err?.message || 'Không thể tải danh sách địa điểm');
+    } finally {
       setIsLoading(false);
     }
   };
 
   const handleSearch = () => {
-    setCurrentPage(1); // Reset về trang 1 khi tìm kiếm
+    setCurrentPage(1);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       if (editingLocation) {
         await locationService.updateLocation(editingLocation.id, formData);
@@ -76,7 +73,7 @@ export default function AdminLocationsPage() {
         await locationService.createLocation(formData);
         toast.success('Thêm địa điểm thành công!');
       }
-      
+
       setIsModalOpen(false);
       setEditingLocation(null);
       setFormData({
@@ -86,8 +83,8 @@ export default function AdminLocationsPage() {
         hinhAnh: '',
       });
       fetchLocations();
-    } catch {
-      toast.error(editingLocation ? 'Không thể cập nhật địa điểm' : 'Không thể thêm địa điểm');
+    } catch (err: any) {
+      toast.error(err?.message || (editingLocation ? 'Không thể cập nhật địa điểm' : 'Không thể thêm địa điểm'));
     }
   };
 
@@ -103,16 +100,14 @@ export default function AdminLocationsPage() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm('Bạn có chắc chắn muốn xóa địa điểm này?')) {
-      return;
-    }
+    if (!window.confirm('Bạn có chắc chắn muốn xóa địa điểm này?')) return;
 
     try {
       await locationService.deleteLocation(id);
       toast.success('Xóa địa điểm thành công!');
       fetchLocations();
-    } catch {
-      toast.error('Không thể xóa địa điểm');
+    } catch (err: any) {
+      toast.error(err?.message || 'Không thể xóa địa điểm');
     }
   };
 
@@ -158,7 +153,7 @@ export default function AdminLocationsPage() {
               });
               setIsModalOpen(true);
             }}
-            className="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto"
+            className="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto cursor-pointer"
           >
             Thêm địa điểm
           </button>
@@ -178,7 +173,7 @@ export default function AdminLocationsPage() {
         <button
           type="button"
           onClick={handleSearch}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer"
         >
           Tìm kiếm
         </button>
@@ -234,14 +229,14 @@ export default function AdminLocationsPage() {
                         <button
                           type="button"
                           onClick={() => handleEdit(location)}
-                          className="text-primary hover:text-primary-hover mr-4"
+                          className="text-primary hover:text-primary-hover mr-4 cursor-pointer"
                         >
                           Sửa
                         </button>
                         <button
                           type="button"
                           onClick={() => handleDelete(location.id)}
-                          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 cursor-pointer"
                         >
                           Xóa
                         </button>
