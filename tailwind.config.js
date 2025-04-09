@@ -16,12 +16,12 @@ module.exports = {
           light: '#FF6B81',
         },
         text: {
-          primary: '#222222',
-          secondary: '#717171',
+          primary: '#222222',    // Chữ chính trong light mode
+          secondary: '#717171',  // Chữ phụ trong light mode
         },
         bg: {
-          primary: '#FFFFFF',
-          secondary: '#F7F7F7',
+          primary: '#FFFFFF',    // Nền chính trong light mode
+          secondary: '#F7F7F7',  // Nền phụ trong light mode
         },
         border: '#DDDDDD',
         btn: {
@@ -31,7 +31,20 @@ module.exports = {
         success: '#008A05',
         warning: '#C13515',
         
-        // Dark mode specific colors are handled through the 'dark:' variant in classes
+        // Dark mode specific colors 
+        dark: {
+          text: {
+            primary: '#FFFFFF',     // Chữ chính trong dark mode
+            secondary: '#B0B0B0',   // Chữ phụ trong dark mode
+          },
+          bg: {
+            primary: '#1D1D1D',     // Nền chính trong dark mode
+            secondary: '#2A2A2A',   // Nền phụ trong dark mode
+            tertiary: '#383838',    // Nền cấp 3 trong dark mode
+          },
+          border: '#383838',        // Viền trong dark mode
+        },
+        
         // The 'airbnb' palette is kept for backward compatibility
         airbnb: {
           rosa: '#FF5A5F',     // Airbnb Red - Màu chính

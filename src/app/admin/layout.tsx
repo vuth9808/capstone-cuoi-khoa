@@ -14,9 +14,9 @@ import {
   X, 
   LogOut, 
   Settings, 
-  Bell,
   Moon,
-  Sun
+  Sun,
+  DollarSign
 } from 'lucide-react';
 import { useAdminAuth } from '@/hooks/use-admin-auth';
 import { useAuthStore } from '@/store/auth.store';
@@ -33,11 +33,7 @@ export default function AdminLayout({
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { signOut } = useAuthStore();
   const { theme, toggleTheme } = useTheme();
-  const [notifications] = useState([
-    { id: 1, message: 'New user registered', time: '2 mins ago' },
-    { id: 2, message: 'New booking request', time: '1 hour ago' },
-    { id: 3, message: 'Server error occurred', time: '2 hours ago' },
-  ]);
+  
   
   // Xác định nếu đang ở trang đăng nhập admin
   const isAuthPage = pathname === '/admin/auth';
@@ -79,7 +75,7 @@ export default function AdminLayout({
     { href: '/admin/rooms', label: 'Phòng', icon: Home },
     { href: '/admin/locations', label: 'Vị trí', icon: MapPin },
     { href: '/admin/users', label: 'Người dùng', icon: Users },
-    { href: '/admin/bookings', label: 'Đặt phòng', icon: Home },
+    { href: '/admin/revenue', label: 'Doanh thu', icon: DollarSign },
     { href: '/admin/settings', label: 'Cài đặt', icon: Settings },
   ];
 
@@ -105,7 +101,7 @@ export default function AdminLayout({
             <Link href="/admin" className="flex items-center space-x-2">
               <div className="relative w-8 h-8">
                 <Image
-                  src="/logo.png"
+                  src="https://cdn.brandfetch.io/idkuvXnjOH/theme/dark/symbol.svg?c=1dxbfHSJFAPEGdCLU4o5B"
                   alt="Logo"
                   fill
                   sizes="32px"
@@ -204,22 +200,9 @@ export default function AdminLayout({
                 {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
               </button>
               
-              {/* Notifications */}
-              <div className="relative">
-                <button className="p-2 text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white rounded-full hover:bg-bg-secondary dark:hover:bg-[#2A2A2A]">
-                  <Bell size={20} />
-                  {notifications.length > 0 && (
-                    <span className="absolute top-1 right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {notifications.length}
-                    </span>
-                  )}
-                </button>
-              </div>
+             
               
-              {/* Settings */}
-              <button className="p-2 text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white rounded-full hover:bg-bg-secondary dark:hover:bg-[#2A2A2A]">
-                <Settings size={20} />
-              </button>
+             
               
               {/* Return to site */}
               <Link 

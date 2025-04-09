@@ -1,9 +1,11 @@
 @import "tailwindcss";
+@import "../styles/theme-utils.css";
 
 :root {
   /* Light mode colors */
   --background: #FFFFFF;
   --background-secondary: #F7F7F7;
+  --background-tertiary: #F0F0F0;
   --foreground: #222222;
   --foreground-secondary: #717171;
   --accent: #FF385C;
@@ -18,6 +20,7 @@
   /* Dark mode colors */
   --background: #121212;
   --background-secondary: #1D1D1D;
+  --background-tertiary: #2A2A2A;
   --foreground: #FFFFFF;
   --foreground-secondary: #B0B0B0;
   --accent: #FF385C;
@@ -51,6 +54,98 @@ html {
 }
 
 /* Đảm bảo transition mượt mà khi chuyển đổi theme */
-* {
+/* * {
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+} */
+
+/* Áp dụng màu mặc định cho các phần tử thông dụng */
+/* Light Mode (mặc định) */
+input, select, textarea, button, .card, .dropdown-menu, .modal, .panel {
+  background-color: var(--background);
+  color: var(--foreground);
+  border-color: var(--border);
+}
+
+table {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+th {
+  background-color: var(--background-secondary);
+  color: var(--foreground);
+}
+
+tr:nth-child(even) {
+  background-color: var(--background-tertiary);
+}
+
+/* Khung, viền và đường kẻ */
+hr, .divider {
+  border-color: var(--border);
+}
+
+/* Header & Footer */
+header, footer {
+  background-color: var(--background-secondary);
+  color: var(--foreground);
+}
+
+/* Navigation */
+nav {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Links */
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Các thành phần tương tác */
+button.primary, .btn-primary {
+  background-color: var(--button-primary);
+  color: white;
+}
+
+button.secondary, .btn-secondary {
+  background-color: var(--button-secondary);
+  color: white;
+}
+
+/* Form elements */
+input, select, textarea {
+  background-color: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+/* Placeholder text */
+::placeholder {
+  color: var(--foreground-secondary);
+  opacity: 0.7;
+}
+
+/* Sidebar */
+.sidebar, aside {
+  background-color: var(--background-secondary);
+  color: var(--foreground);
+}
+
+/* Cards, Panels & Box */
+.card, .panel, .box {
+  background-color: var(--background-secondary);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+/* Tooltip */
+.tooltip {
+  background-color: var(--background-tertiary);
+  color: var(--foreground);
+  border: 1px solid var(--border);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -32,6 +32,7 @@ import {
 import Link from "next/link";
 import { useFavorites } from '@/contexts/favorites.context';
 import { animateElement, AnimationTypes } from '@/utils/animation';
+import { Pagination } from '@/components/ui/pagination';
 
 export default function RoomDetailPage() {
   const { id } = useParams();
@@ -45,6 +46,8 @@ export default function RoomDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   // Calculate average rating from reviews
   const calculateAverageRating = (reviews: Review[]) => {
@@ -115,18 +118,41 @@ export default function RoomDetailPage() {
     fetchRoomDetail();
   }, [id]);
 
-  // Thêm useEffect để xử lý lọc reviews
+  // Thêm useEffect để xử lý lọc reviews và phân trang
   useEffect(() => {
-    if (selectedRating === null) {
-      setFilteredReviews(reviews);
-    } else {
-      setFilteredReviews(
-        reviews.filter(
-          (review) => Math.floor(review.saoBinhLuan) === selectedRating
-        )
+    let filtered = reviews;
+    
+    // Lọc theo rating nếu có
+    if (selectedRating !== null) {
+      filtered = reviews.filter(
+        (review) => Math.floor(review.saoBinhLuan) === selectedRating
       );
     }
+    
+    setFilteredReviews(filtered);
+    // Reset về trang 1 khi thay đổi bộ lọc
+    setCurrentPage(1);
   }, [reviews, selectedRating]);
+
+  // Xử lý phân trang
+  const paginatedReviews = useCallback(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredReviews.slice(startIndex, endIndex);
+  }, [filteredReviews, currentPage, itemsPerPage]);
+
+  // Tính tổng số trang
+  const totalPages = Math.ceil(filteredReviews.length / itemsPerPage);
+
+  // Hàm xử lý chuyển trang
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Cuộn lên đầu phần đánh giá
+    const reviewsSection = document.getElementById('reviews-section');
+    if (reviewsSection) {
+      reviewsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   // Hàm xử lý yêu thích
   const handleFavoriteToggle = (e: React.MouseEvent) => {
@@ -216,87 +242,86 @@ export default function RoomDetailPage() {
     );
   }
 
+  // Tính toán average rating
   const averageRating = calculateAverageRating(reviews);
 
+  // Lấy danh sách tiện nghi
   const amenities = [
-    { name: "Máy giặt", value: room.mayGiat, icon: WashingMachine },
-    { name: "Bàn là", value: room.banLa, icon: Tv },
-    { name: "TV", value: room.tivi, icon: Tv },
-    { name: "Điều hòa", value: room.dieuHoa, icon: Wind },
     { name: "Wifi", value: room.wifi, icon: Wifi },
+    { name: "TV", value: room.tivi, icon: Tv },
     { name: "Bếp", value: room.bep, icon: Utensils },
     { name: "Bãi đỗ xe", value: room.doXe, icon: Car },
+    { name: "Điều hòa", value: room.dieuHoa, icon: Wind },
+    { name: "Máy giặt", value: room.mayGiat, icon: WashingMachine },
+    { name: "Bàn ủi", value: room.banUi, icon: Droplet },
     { name: "Hồ bơi", value: room.hoBoi, icon: Droplet },
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="container mx-auto px-4 py-8">
       {/* Back button */}
       <button
         onClick={() => router.back()}
-        className="mb-6 inline-flex items-center text-gray-600 hover:text-gray-900 animate__animated animate__fadeInLeft"
+        className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        <span>Quay lại</span>
+        Quay lại
       </button>
 
-      {/* Room title and location */}
-      <div className="mb-6">
+      {/* Room title */}
+      <div className="mb-8">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900 animate__animated animate__fadeInDown">{room.tenPhong}</h1>
-          
-          {/* Yêu thích */}
-          {room && (
-            <button 
-              onClick={handleFavoriteToggle}
-              className="p-2 bg-white dark:bg-gray-800 rounded-full shadow-md hover:scale-110 transition-all duration-200 hover:shadow-lg active:scale-95 animate__animated animate__fadeInRight"
-              aria-label={isFavorite(room.id, 'room') ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"}
-            >
-              <Heart className={`h-5 w-5 transition-all duration-200 ${
-                isFavorite(room.id, 'room') 
-                  ? 'text-red-500 fill-red-500 scale-110' 
-                  : 'text-gray-500 hover:text-red-500'
-              }`} />
-            </button>
-          )}
+          <h1 className="text-3xl font-bold text-gray-900">{room.tenPhong}</h1>
+          <button
+            onClick={handleFavoriteToggle}
+            className="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+            aria-label="Yêu thích"
+          >
+            <Heart
+              className={`h-6 w-6 ${
+                isFavorite(room.id, "room")
+                  ? "text-rose-600 fill-current"
+                  : "text-gray-400"
+              }`}
+            />
+          </button>
         </div>
-        <div className="flex items-center mt-2 text-gray-600 animate__animated animate__fadeIn animate__delay-1s">
-          <div className="flex items-center">
-            <Star className="h-4 w-4 text-amber-500 fill-current mr-1" />
-            <span className="font-medium mr-1">{averageRating}</span>
-            <span className="mr-2">({reviews.length} đánh giá)</span>
-          </div>
-          <span className="mx-2">•</span>
-          <div className="flex items-center">
-            <MapPin className="h-4 w-4 mr-1" />
-            <span>{room.diaChi || "Chưa cập nhật địa chỉ"}</span>
-          </div>
+        <div className="flex items-center mt-2 text-gray-600">
+          <MapPin className="h-4 w-4 mr-1" />
+          <span>{room.diaChi || "Chưa cập nhật địa chỉ"}</span>
         </div>
       </div>
 
-      {/* Image gallery */}
-      <div className="grid grid-cols-1 gap-4 mb-8 animate__animated animate__zoomIn animate__delay-1s">
-        <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
-          <Image
-            src={
-              galleryImages[0] || "https://placehold.co/600x400?text=No+Image"
-            }
-            alt={room.tenPhong}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-            onError={(e) => {
-              const img = e.target as HTMLImageElement;
-              img.src = "https://placehold.co/600x400?text=No+Image";
-            }}
-          />
-        </div>
-      </div>
-
+      {/* Main content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Room details */}
         <div className="lg:col-span-2">
+          {/* Gallery */}
+          <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-8">
+            <div className="relative h-80">
+              <Image
+                src={galleryImages[0] || "/placeholder.jpg"}
+                alt={room.tenPhong}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+            {galleryImages.length > 1 && (
+              <div className="grid grid-cols-4 gap-2 p-4">
+                {galleryImages.slice(1, 5).map((image, index) => (
+                  <div key={index} className="relative h-20">
+                    <Image
+                      src={image}
+                      alt={`${room.tenPhong} - ${index + 2}`}
+                      fill
+                      className="object-cover rounded"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Room info */}
           <div className="bg-white rounded-xl shadow-sm p-6 mb-8 animate__animated animate__fadeInLeft animate__delay-2s">
             <div className="flex items-center justify-between pb-6 border-b">
@@ -418,7 +443,7 @@ export default function RoomDetailPage() {
           </div>
 
           {/* Reviews section */}
-          <div className="bg-white rounded-xl shadow-sm p-6">
+          <div id="reviews-section" className="bg-white rounded-xl shadow-sm p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold">Đánh giá</h2>
               <div className="flex items-center">
@@ -566,7 +591,7 @@ export default function RoomDetailPage() {
                 <>
                   {filteredReviews.length > 0 ? (
                     <div className="space-y-6">
-                      {filteredReviews.map((review) => (
+                      {paginatedReviews().map((review) => (
                         <div
                           key={review.id}
                           className="border-b border-gray-100 pb-6 last:border-0"
@@ -621,6 +646,15 @@ export default function RoomDetailPage() {
                           </div>
                         </div>
                       ))}
+                      
+                      {/* Pagination */}
+                      {totalPages > 1 && (
+                        <Pagination
+                          currentPage={currentPage}
+                          totalPages={totalPages}
+                          onPageChange={handlePageChange}
+                        />
+                      )}
                     </div>
                   ) : (
                     <div className="text-center py-8 text-gray-500">

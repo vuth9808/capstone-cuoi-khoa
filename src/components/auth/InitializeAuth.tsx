@@ -9,18 +9,28 @@ export const InitializeAuth = () => {
 
   useEffect(() => {
     const initialize = async () => {
-      initializeFromStorage();
-      const token = localStorage.getItem('token');
-      
-      if (token) {
-        try {
-          const response = await authService.getUserInfo();
-          signIn(response.content, token);
-        } catch {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          signOut();
+      try {
+        // First initialize from storage
+        initializeFromStorage();
+        
+        // Then verify token with backend
+        const token = localStorage.getItem('token');
+        if (token) {
+          try {
+            const response = await authService.getUserInfo();
+            if (response?.content) {
+              signIn(response.content, token);
+            } else {
+              throw new Error('Invalid user data');
+            }
+          } catch (error) {
+            console.error('Failed to verify token:', error);
+            signOut();
+          }
         }
+      } catch (error) {
+        console.error('Failed to initialize auth:', error);
+        signOut();
       }
     };
 

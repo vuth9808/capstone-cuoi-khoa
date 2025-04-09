@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 import { userService } from '@/services/user.service';
@@ -15,7 +15,7 @@ export default function AdminUsersPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const handleFilterUsers = () => {
+  const handleFilterUsers = useCallback(() => {
     let filteredUsers = allUsers;
 
     // Lọc theo searchTerm nếu có
@@ -30,7 +30,7 @@ export default function AdminUsersPage() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedUsers = filteredUsers.slice(startIndex, startIndex + itemsPerPage);
     setUsers(paginatedUsers);
-  };
+  }, [allUsers, searchTerm, currentPage, itemsPerPage]);
 
   useEffect(() => {
     fetchUsers();
@@ -39,7 +39,7 @@ export default function AdminUsersPage() {
   useEffect(() => {
     // Khi allUsers hoặc searchTerm thay đổi, lọc và phân trang lại
     handleFilterUsers();
-  }, [allUsers, searchTerm, currentPage, handleFilterUsers]);
+  }, [handleFilterUsers]);
 
   const fetchUsers = async () => {
     try {
@@ -54,7 +54,6 @@ export default function AdminUsersPage() {
 
   const handleSearch = () => {
     setCurrentPage(1); // Reset về trang 1 khi tìm kiếm
-    handleFilterUsers();
   };
 
   const handleDelete = async (id: number) => {

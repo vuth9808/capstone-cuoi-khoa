@@ -7,15 +7,18 @@ import Providers from '@/app/providers';
 import { InitializeAuth } from '@/components/auth/InitializeAuth';
 import { Toaster } from 'react-hot-toast';
 import { usePathname } from 'next/navigation';
+import { useTheme } from '@/contexts/theme.context';
 
 interface ClientLayoutProps {
   children: React.ReactNode;
 }
 
-const ClientLayout = ({ children }: ClientLayoutProps) => {
+// Component này sẽ được bọc trong các providers và có thể sử dụng các hooks
+const InnerLayout = ({ children }: ClientLayoutProps) => {
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith('/admin');
+  const { theme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -37,12 +40,33 @@ const ClientLayout = ({ children }: ClientLayoutProps) => {
   }
 
   return (
-    <Providers>
+    <>
       <InitializeAuth />
       {!isAdminPage && <Header />}
-      <Toaster position="top-center" />
-      <main className="bg-bg-primary dark:bg-[#121212] min-h-[calc(100vh-70px)]">{children}</main>
+      <Toaster 
+        position="top-center" 
+        toastOptions={{
+          // Cấu hình toaster theo theme
+          style: {
+            background: theme === 'dark' ? 'var(--background-secondary)' : 'var(--background)',
+            color: theme === 'dark' ? 'var(--foreground)' : 'var(--foreground)',
+            border: `1px solid var(--border)`,
+          },
+        }}
+      />
+      <main className="bg-theme-primary text-theme-primary min-h-[calc(100vh-70px)]">
+        {children}
+      </main>
       {!isAdminPage && <Footer />}
+    </>
+  );
+};
+
+// Component chính để export, bọc InnerLayout trong các providers
+const ClientLayout = ({ children }: ClientLayoutProps) => {
+  return (
+    <Providers>
+      <InnerLayout>{children}</InnerLayout>
     </Providers>
   );
 };

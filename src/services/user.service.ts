@@ -3,35 +3,35 @@ import { User } from '@/types';
 
 export const userService = {
   getUsers: async (): Promise<ApiResponse<User[]>> => {
-    return axiosInstance.get('/nguoi-dung');
+    return axiosInstance.get('/users');
   },
 
   getUserById: async (id: number): Promise<ApiResponse<User>> => {
-    return axiosInstance.get(`/nguoi-dung/${id}`);
+    return axiosInstance.get(`/users/${id}`);
   },
 
   createUser: async (payload: Omit<User, 'id'>): Promise<ApiResponse<User>> => {
-    return axiosInstance.post('/nguoi-dung', payload);
+    return axiosInstance.post('/users', payload);
   },
 
   updateUser: async (id: number, payload: Partial<User>): Promise<ApiResponse<User>> => {
-    return axiosInstance.put(`/nguoi-dung/${id}`, payload);
+    return axiosInstance.put(`/users/${id}`, payload);
   },
 
   deleteUser: async (id: number): Promise<ApiResponse<void>> => {
-    return axiosInstance.delete(`/nguoi-dung/${id}`);
+    return axiosInstance.delete(`/users/${id}`);
   },
 
   // Additional user-specific operations
   updateAvatar: async (id: number, file: File): Promise<ApiResponse<User>> => {
     const formData = new FormData();
     formData.append('formFile', file);
-    return axiosInstance.post(`/nguoi-dung/upload-avatar/${id}`, formData);
+    return axiosInstance.post(`/users/upload-avatar/${id}`, formData);
   },
 
   searchUsers: async (keyword: string): Promise<ApiResponse<User[]>> => {
     const params = new URLSearchParams({ keyword });
-    return axiosInstance.get(`/nguoi-dung/search?${params}`);
+    return axiosInstance.get(`/users/search?${params}`);
   },
 
   // Get user's bookings

@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'react-hot-toast';
 import { useAuth } from '@/hooks/use-auth';
-import { Shield, LogIn } from 'lucide-react';
+import { Shield, LogIn, Home } from 'lucide-react';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { useAuthStore } from '@/store/auth.store';
 
@@ -161,8 +162,17 @@ export default function AdminAuthPage() {
             </button>
           </div>
         </form>
+
+        <Link 
+                href="/"
+                className="hidden md:flex text-text-secondary dark:text-[#B0B0B0] hover:text-text-primary dark:hover:text-white text-sm font-medium items-center px-3 py-2 rounded hover:bg-bg-secondary dark:hover:bg-[#2A2A2A]"
+              >
+                <Home className="h-4 w-4 mr-2" />
+                Về trang chủ
+              </Link>
         
         <div className="rounded-md bg-yellow-50 p-4">
+          
           <div className="flex">
             <div className="flex-shrink-0">
               <LogIn className="h-5 w-5 text-yellow-400" />
@@ -173,6 +183,7 @@ export default function AdminAuthPage() {
                 <p>
                   Đây là khu vực dành riêng cho quản trị viên. Nếu bạn không phải quản trị viên, vui lòng quay lại trang người dùng.
                 </p>
+                
               </div>
             </div>
           </div>

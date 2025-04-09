@@ -14,12 +14,12 @@ interface AuthState {
 
 const getStoredToken = () => {
   if (typeof window === 'undefined') return null;
-  return Cookies.get('token') || null;
+  return localStorage.getItem('token') || Cookies.get('token') || null;
 };
 
 const getStoredUser = () => {
   if (typeof window === 'undefined') return null;
-  const userStr = Cookies.get('user');
+  const userStr = localStorage.getItem('user') || Cookies.get('user');
   if (!userStr) return null;
   try {
     return JSON.parse(decodeURIComponent(userStr)) as User;
@@ -34,20 +34,20 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAdmin: false,
   isInitialized: false,
   signIn: (user: User, token: string) => {
-    Cookies.set('token', token, { expires: 7 });
-    Cookies.set('user', encodeURIComponent(JSON.stringify(user)), { expires: 7 });
-    
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
+    
+    Cookies.set('token', token, { expires: 7, path: '/' });
+    Cookies.set('user', encodeURIComponent(JSON.stringify(user)), { expires: 7, path: '/' });
     
     set({ user, token, isAdmin: user.role === 'ADMIN' });
   },
   signOut: () => {
-    Cookies.remove('token');
-    Cookies.remove('user');
-    
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    
+    Cookies.remove('token', { path: '/' });
+    Cookies.remove('user', { path: '/' });
     
     set({ user: null, token: null, isAdmin: false });
   },

@@ -18,8 +18,8 @@ export default function ThemeToggle() {
         onClick={handleThemeToggle}
         className={`p-2 rounded-full transition-all duration-300 ${
           theme === 'dark'
-            ? 'bg-[#383838] text-yellow-300 hover:bg-[#2A2A2A] hover:text-yellow-200'
-            : 'bg-bg-secondary text-primary hover:bg-border hover:text-primary-hover'
+            ? 'bg-theme-tertiary text-yellow-300 hover:bg-theme-secondary hover:text-yellow-200'
+            : 'bg-theme-secondary text-primary hover:bg-theme-tertiary hover:text-primary-hover'
         }`}
         aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         data-testid="theme-toggle"

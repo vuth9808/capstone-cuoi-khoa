@@ -92,7 +92,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="space-y-16 dark:bg-gray-900">
+    <div className="space-y-16 bg-theme-primary">
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center">
         <div className="absolute inset-0 z-0">
@@ -123,8 +123,8 @@ export default function Home() {
       <section className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <div className="animate__animated animate__fadeInLeft">
-            <h2 className="text-3xl font-bold text-airbnb-hof dark:text-white">Địa điểm nổi bật</h2>
-            <p className="text-gray-600 dark:text-gray-300 mt-2">Khám phá các địa điểm tuyệt vời cho chuyến đi sắp tới của bạn</p>
+            <h2 className="text-3xl font-bold text-theme-primary">Địa điểm nổi bật</h2>
+            <p className="text-theme-secondary mt-2">Khám phá các địa điểm tuyệt vời cho chuyến đi sắp tới của bạn</p>
           </div>
           <Link href="/locations" className="text-airbnb-rosa hover:text-airbnb-rausch font-medium flex items-center transition-colors animate__animated animate__fadeInRight">
             Xem tất cả <ArrowRight className="h-4 w-4 ml-1" />
@@ -161,13 +161,13 @@ export default function Home() {
               {mounted && (
                 <button 
                   onClick={(e) => handleLocationFavoriteToggle(e, location)}
-                  className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:scale-110 transition-all duration-200 hover:shadow-lg active:scale-95"
+                  className="absolute top-3 right-3 z-10 bg-theme-primary p-2 rounded-full shadow-md hover:scale-110 transition-all duration-200 hover:shadow-lg active:scale-95"
                   aria-label={isFavorite(location.id, 'location') ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"}
                 >
                   <Heart className={`h-5 w-5 transition-all duration-200 ${
                     isFavorite(location.id, 'location') 
                       ? 'text-red-500 fill-red-500 scale-110' 
-                      : 'text-gray-500 hover:text-red-500'
+                      : 'text-theme-secondary hover:text-red-500'
                   }`} />
                 </button>
               )}
@@ -177,12 +177,12 @@ export default function Home() {
       </section>
 
       {/* Featured Places */}
-      <section className="bg-airbnb-foggy dark:bg-gray-800 py-16">
+      <section className="bg-theme-secondary py-16">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <div className="animate__animated animate__fadeInLeft">
-              <h2 className="text-3xl font-bold text-airbnb-hof dark:text-white">Phòng đề xuất</h2>
-              <p className="text-gray-600 dark:text-gray-300 mt-2">Những lựa chọn tuyệt vời cho kỳ nghỉ hoàn hảo của bạn</p>
+              <h2 className="text-3xl font-bold text-theme-primary">Phòng đề xuất</h2>
+              <p className="text-theme-secondary mt-2">Những lựa chọn tuyệt vời cho kỳ nghỉ hoàn hảo của bạn</p>
             </div>
             <Link href="/rooms" className="text-airbnb-rosa hover:text-airbnb-rausch font-medium flex items-center transition-colors animate__animated animate__fadeInRight">
               Xem tất cả <ArrowRight className="h-4 w-4 ml-1" />
@@ -194,7 +194,7 @@ export default function Home() {
               <div key={room.id} className={`group relative animate__animated animate__fadeIn animate__delay-${index % 5}s`}>
                 <Link
                   href={`/rooms/${room.id}`}
-                  className="block bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  className="block bg-theme-primary rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <Image
@@ -207,12 +207,12 @@ export default function Home() {
                       unoptimized={!room.hinhAnh}
                     />
                     <div className="absolute top-3 left-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-2 py-1 rounded-full text-sm font-medium text-airbnb-rosa">
-                      ${room.giaTien} <span className="text-xs text-gray-500 dark:text-gray-400">/đêm</span>
+                      ${room.giaTien} <span className="text-xs text-theme-secondary">/đêm</span>
                     </div>
                   </div>
                   <div className="p-5">
-                    <h3 className="font-bold text-lg mb-2 text-airbnb-hof dark:text-white group-hover:text-airbnb-rosa transition-colors line-clamp-1">{room.tenPhong}</h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-3 line-clamp-2 text-sm">{room.moTa}</p>
+                    <h3 className="font-bold text-lg mb-2 text-theme-primary group-hover:text-airbnb-rosa transition-colors line-clamp-1">{room.tenPhong}</h3>
+                    <p className="text-theme-secondary mb-3 line-clamp-2 text-sm">{room.moTa}</p>
                     
                     <div className="flex flex-wrap gap-2 mb-3">
                       {room.wifi && (
@@ -234,36 +234,37 @@ export default function Home() {
                     
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
-                        <div className="flex items-center text-gray-500 dark:text-gray-400">
+                        <div className="flex items-center text-theme-secondary">
                           <Bed className="h-4 w-4 mr-1" />
                           <span className="text-sm">{room.phongNgu}</span>
                         </div>
-                        <div className="flex items-center text-gray-500 dark:text-gray-400">
+                        <div className="flex items-center text-theme-secondary">
                           <Bath className="h-4 w-4 mr-1" />
                           <span className="text-sm">{room.phongTam}</span>
                         </div>
-                        <div className="flex items-center text-gray-500 dark:text-gray-400">
+                        <div className="flex items-center text-theme-secondary">
                           <Users className="h-4 w-4 mr-1" />
                           <span className="text-sm">{room.khach}</span>
                         </div>
                       </div>
                       <div className="flex items-center text-amber-500">
                         <Star className="h-4 w-4 fill-current mr-1" />
-                        <span className="font-medium">4.8</span>
+                        <span className="text-sm font-medium">4.8</span>
                       </div>
                     </div>
                   </div>
                 </Link>
+                
                 {mounted && (
                   <button 
                     onClick={(e) => handleRoomFavoriteToggle(e, room)}
-                    className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:scale-110 transition-all duration-200 hover:shadow-lg active:scale-95"
+                    className="absolute top-3 right-3 z-10 bg-theme-primary p-2 rounded-full shadow-md hover:scale-110 transition-all duration-200 hover:shadow-lg active:scale-95"
                     aria-label={isFavorite(room.id, 'room') ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"}
                   >
                     <Heart className={`h-5 w-5 transition-all duration-200 ${
                       isFavorite(room.id, 'room') 
                         ? 'text-red-500 fill-red-500 scale-110' 
-                        : 'text-gray-500 hover:text-red-500'
+                        : 'text-theme-secondary hover:text-red-500'
                     }`} />
                   </button>
                 )}
@@ -273,31 +274,42 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="container mx-auto px-4 py-8">
-        <div className="bg-gradient-to-r from-airbnb-rosa to-airbnb-rausch rounded-3xl overflow-hidden animate__animated animate__fadeIn animate__slower">
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="p-8 md:p-12 flex flex-col justify-center">
-              <h2 className="text-3xl font-bold mb-4 text-white animate__animated animate__fadeInLeft">Trở thành chủ nhà</h2>
-              <p className="text-white opacity-90 mb-6 animate__animated animate__fadeInLeft animate__delay-1s">Chia sẻ không gian của bạn, tạo thêm thu nhập và mở ra những cơ hội mới bằng cách chia sẻ nơi ở của bạn.</p>
-              <div className="animate__animated animate__fadeInUp animate__delay-2s">
-                <Link 
-                  href="/become-host" 
-                  className="inline-flex items-center px-6 py-3 bg-white hover:bg-airbnb-foggy text-airbnb-rosa font-medium rounded-full transition-colors dark:hover:bg-gray-200 animate__animated animate__pulse animate__infinite animate__slower"
-                >
-                  Tìm hiểu thêm <ArrowRight className="h-4 w-4 ml-2" />
-                </Link>
-              </div>
+      {/* Why Choose Us */}
+      <section className="container mx-auto px-4 py-10">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-theme-primary mb-3">Tại sao chọn chúng tôi?</h2>
+          <p className="text-theme-secondary max-w-3xl mx-auto">Chúng tôi cam kết mang đến trải nghiệm đặt phòng tốt nhất với nhiều lựa chọn phù hợp với nhu cầu của bạn</p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="theme-card text-center p-6 animate__animated animate__fadeInUp">
+            <div className="w-16 h-16 bg-airbnb-rosa/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-airbnb-rosa" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+              </svg>
             </div>
-            <div className="relative h-64 md:h-auto animate__animated animate__fadeInRight">
-              <Image
-                src="https://a0.muscache.com/im/pictures/791aba62-2de8-4722-99b5-45838715eb34.jpg"
-                alt="Become a host"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
-              />
+            <h3 className="text-xl font-bold mb-3 text-theme-primary">Đảm bảo chất lượng</h3>
+            <p className="text-theme-secondary">Tất cả các phòng đều được đánh giá và kiểm tra kỹ lưỡng để đảm bảo chất lượng tốt nhất cho khách hàng.</p>
+          </div>
+          
+          <div className="theme-card text-center p-6 animate__animated animate__fadeInUp animate__delay-1s">
+            <div className="w-16 h-16 bg-airbnb-babu/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-airbnb-babu" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
             </div>
+            <h3 className="text-xl font-bold mb-3 text-theme-primary">Tiết kiệm thời gian</h3>
+            <p className="text-theme-secondary">Quy trình đặt phòng đơn giản, nhanh chóng giúp bạn tiết kiệm thời gian và tìm được phòng ưng ý.</p>
+          </div>
+          
+          <div className="theme-card text-center p-6 animate__animated animate__fadeInUp animate__delay-2s">
+            <div className="w-16 h-16 bg-airbnb-hof/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-airbnb-hof" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold mb-3 text-theme-primary">Hỗ trợ 24/7</h3>
+            <p className="text-theme-secondary">Đội ngũ hỗ trợ khách hàng luôn sẵn sàng giúp đỡ bạn mọi lúc, mọi nơi khi cần thiết.</p>
           </div>
         </div>
       </section>

@@ -8,8 +8,10 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Airbnb',
   description: 'A modern Airbnb built with Next.js and TypeScript',
-  // Thêm stylesheet từ CDN, không hoạt động trong Next.js App Router - chỉ để minh họa
-  // Chúng ta sẽ sử dụng cách khác ở dưới
+  icons: {
+    icon: 'https://cdn.brandfetch.io/idkuvXnjOH/theme/dark/symbol.svg?c=1dxbfHSJFAPEGdCLU4o5B',
+  },
+  
 };
 
 export default function RootLayout({

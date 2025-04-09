@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 import { roomService } from '@/services/room.service';
@@ -42,7 +42,8 @@ export default function AdminRoomsPage() {
     hinhAnh: '',
   });
 
-  const handleFilterRooms = () => {
+  // Memoize handleFilterRooms to prevent recreation on every render
+  const handleFilterRooms = useCallback(() => {
     let filteredRooms = allRooms;
 
     // Lọc theo searchTerm nếu có
@@ -57,7 +58,7 @@ export default function AdminRoomsPage() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedRooms = filteredRooms.slice(startIndex, startIndex + itemsPerPage);
     setRooms(paginatedRooms);
-  };
+  }, [allRooms, searchTerm, currentPage, itemsPerPage]);
 
   useEffect(() => {
     fetchRooms();
@@ -67,7 +68,7 @@ export default function AdminRoomsPage() {
   useEffect(() => {
     // Khi allRooms hoặc searchTerm thay đổi, lọc và phân trang lại
     handleFilterRooms();
-  }, [allRooms, searchTerm, currentPage, handleFilterRooms]);
+  }, [handleFilterRooms]);
 
   const fetchRooms = async () => {
     try {
@@ -91,7 +92,6 @@ export default function AdminRoomsPage() {
 
   const handleSearch = () => {
     setCurrentPage(1); // Reset về trang 1 khi tìm kiếm
-    handleFilterRooms();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
