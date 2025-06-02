@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Airbnb 🏠 - Platform for booking
 
-## Getting Started
+## 📝 Project Overview
 
-First, run the development server:
+This is a comprehensive Airbnb clone built with Next.js, designed to replicate the core functionalities and user experience of the popular accommodation booking platform. The application showcases modern web development techniques and provides a seamless, responsive interface for property browsing, booking, and management.
+
+## 🌟 Key Features
+
+- 🏠 Comprehensive property listing and search
+- 📅 Advanced booking and reservation system
+- 🗺️ Interactive map integration
+- 💳 Secure payment processing
+- ❤️ Favorites list diversity
+- 🌑 Dark mode
+- 👤 User authentication and profiles
+- 🌈 Responsive and accessible design
+
+## 🛠 Tech Stack
+
+### Frontend
+
+- Next.js 15
+- React 18
+- TypeScript
+- Tailwind CSS
+- Zustand (State Management)
+- React Query
+- Framer Motion
+
+### Additional Libraries
+
+- Axios (API Interactions)
+- React Hook Form
+- Zod (Validation)
+- Headless UI
+- Radix UI
+- Swagger
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18+)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/vuth9808/capstone-cuoi-khoa
+```
+
+2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Run Development Server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📸 Demo Screenshots
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Hero Page
 
-## Learn More
+![ Hero Page](/public/images/demo/hero.jpg)
 
-To learn more about Next.js, take a look at the following resources:
+### Featured Page
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Featured Page](/public/images/demo/featured.jpg)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Search Results Page
 
-## Deploy on Vercel
+![Search results Page](/public/images/demo/search-results.jpg)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Detail Room Page
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![Detail Room Page](/public/images/demo/detail-room.jpg)
+
+### Favourite Page
+
+![Favourite Page](/public/images/demo/favourite.jpg)
+
+### Paying MOMO Page
+
+![Paying MOMO Page](/public/images/demo/payingMOMO.jpg)
+
+### Become House Owner Page
+
+![Become House Owner Page](/public/images/demo/house-owner.jpg)
+
+### Reservation List Page
+
+![Reservation List Page](/public/images/demo/reservation-list.jpg)
+
+### Footer Page
+
+![Footer Page](/public/images/demo/footer.jpg)
+
+### Dashboard Page
+
+![Dashboard Page](/public/images/demo/dashboard.jpg)
+
+## 📋 Available Scripts
+
+- `dev`: Start development server
+- `build`: Create production build
+- `start`: Run production server
+- `lint`: Run ESLint checks
+
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## ✉️ Contact
+
+TO HOANG VU - [tohoangvu161225@gmail.com](mailto:tohoangvu161225@gmail.com)
